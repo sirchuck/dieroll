@@ -7,6 +7,11 @@
 
 # Config Files
 *.conf
+*.chr
+*.usr
+*.crt
+*.key
+
 
 # Test binary, built with `go test -c`
 *.test
