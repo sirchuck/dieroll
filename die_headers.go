@@ -85,6 +85,14 @@ type Users struct {
 	Crosssite 	string	`json:"cx"`		// Ajax Form Pass 
 }
 
+type Dierolls struct {
+	User 		string	`json:"u"`		// User who rolled 
+	Char        string  `json:"c"`		// Character who rolled
+	D1 			string	`json:"d1"`		// Die 1 
+	D2 			string	`json:"d2"`		// Die 2 
+	R1	 		string	`json:"r1"`		// Result 
+}
+
 type Character struct {
 	Cid  		string	`json:"id"` 				// Character id UN_1 
 	Cname 		string	`json:"char_name"`			// Character Name

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"flag"
 	"net/http"
+	"math/rand"
+	"time"
 //	"encoding/json"
 //	"strings"
 //	"github.com/NYTimes/gziphandler"
@@ -80,6 +82,10 @@ func uriHandler(w http.ResponseWriter, r *http.Request) {
 				pull_user_list(w,r,&u)
 			}else if( uri.Method == "update_user" ){
 				update_user(w,r,&u,&passvars)
+			}else if( uri.Method == "pull_die_roll" ){
+				pull_die_roll(w,r,&u,&passvars)
+			}else if( uri.Method == "die_roll" ){
+				die_roll(w,r,&u,&passvars)
 			}else if( uri.Method == "char_delete" ){
 				char_delete(w,r,&u,&passvars)
 			}else if( uri.Method == "char_list" ){
@@ -144,6 +150,8 @@ func main() {
 	if( iExist("private/users/privileges.idx" ) ){
 		iWriteFileByte( "private/users/privileges.idx", []byte("") )
 	}
+	
+	rand.Seed(time.Now().UnixNano()) 
 
 	Tools_init()
 	buildbg()

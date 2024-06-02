@@ -6,6 +6,7 @@ import(
 	"strconv"
 	"encoding/json"
 	"strings"
+	"math/rand"
 //	"io/ioutil"
 	"os"
 //	"bufio"
@@ -102,3 +103,51 @@ func char_update_img(w http.ResponseWriter, r *http.Request, u *Users, passvars 
 	}
 	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"success\":\"true\"}")
 }
+func die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs){
+	filename 	:= "private/rolls.log"
+	n1, _ := strconv.Atoi( passvars.VALS["n1"] ) // Number of dice
+	n2, _ := strconv.Atoi( passvars.VALS["n2"] ) // Number of sides per die
+
+
+	r1      := 0
+	rolls 	:= "["
+	for i := 0; i < n1; i++ {
+		droll := rand.Intn( n2 ) + 1 // prints integer between 0 and x, inclusively
+		rolls += strconv.Itoa(droll) + ","
+		r1 += droll 
+	}
+	rolls = rolls[:len(rolls)-1] + "]"
+
+	f           := ""
+	if( u.Status >= 10 ){
+		f 			 = fileToString( filename )
+		f 			 = "[" + `\"` + u.Username + `\"` + "," + strconv.Itoa(n1) + "," + strconv.Itoa(n2) + "," + rolls + "," + strconv.Itoa(r1) + "]," + f
+		fa 			:= strings.Split(f, ",")
+		fd          := ""
+		icount 		:= 0
+		for _, ch := range fa {
+			icount++
+			if(icount <= 50 && ch != ""){
+				fd += ch + ","
+			}
+		}
+		iWriteFileByte( filename, []byte( fd )  )
+		if(f != ""){
+			f 			= f[:len(f)-1] 
+		}
+	}
+	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"[" + f + "]\", \"success\":\"true\"}")
+}
+func pull_die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs){
+	filename 	:= "private/rolls.log"
+	f := ""
+	if( u.Status >= 10 ){
+		f 			 = fileToString( filename )
+		if(f != ""){
+			f 			= f[:len(f)-1] 
+		}
+	}
+	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"[" + f + "]\", \"success\":\"true\"}")
+}
+
+

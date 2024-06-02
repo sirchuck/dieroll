@@ -132,5 +132,12 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 #pop_box_maps   { width: 200px; }
 #pop_box_quests { width: 200px; }
 
-
+.dr_item    { display: block; border-bottom: 1px solid #333; padding: 10px; }
+.dr_user    { display: block; font-weight:bold; text-transform: capitalize; }
+.dr_d1      { display:inline-block; width: 40px; text-align: center; background-color:#fff; border:1px solid red; }
+.dr_dd      { display:inline-block; width: 20px; text-align:center; }
+.dr_d2      { display:inline-block; width: 40px; text-align: center; background-color:#fff; border:1px solid red; }
+.dr_dtotal  { display:inline-block; width: 60px; float: right; text-align: center; background-color:#ffdfdf; border:1px solid red; font-weight: bold; border-radius:8px; }
+.dr_dlist   { display:inline-block; width: 190px; margin-top: 4px; border: 1px solid #096ca5; background-color:#94d8ff; text-align: left; }
+.dr_indroll { display:inline-block; width: 30px; margin: 4px auto; text-align:center; }
 

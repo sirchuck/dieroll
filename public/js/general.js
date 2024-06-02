@@ -1150,21 +1150,61 @@ $(document).ready(function () {
 
 	}
 
-	$(document).on('click', '.die_roller_link', function(){
-		$('#die_roller_div').show();
-/*
-		s = {"vals":{"cx":cx, "u":usr, "n1":n1, "n2":n2 ) }};
+	$('#leftcol').on('click', '.die_roller_link', function(){
+		$('#die_roller_div').toggle();
+		if( $('#die_roller_div').is(":visible") ){
+			s = {"vals":{"cx":cx }};
+			$.ajax({
+			  	type: "POST", url: "<ROOT_URL>/ajax/pull_die_roll", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
+			    success: function (d) { 
+		    		cx = d.cx;
+			    	if( d.success == "true" ){
+			    		build_die_roller_output(d.o);
+			    	}
+			    }
+			});
+		}
+	});
+	$('#leftcol').on('click', '#die_roller_roll_button', function(){
+
+		if( $('#die_roller_d1').val() < 1 ){ alert( '# Dice must be greater than 0' ); return false; }
+		if( $('#die_roller_d2').val() < 1 ){ alert( 'Die sides must be greater than 0' ); return false; }
+
+
+		s = {"vals":{"cx":cx, "n1":$('#die_roller_d1').val(), "n2":$('#die_roller_d2').val() }};
 		$.ajax({
-		  	type: "POST", url: "<ROOT_URL>/ajax/char_update", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
+		  	type: "POST", url: "<ROOT_URL>/ajax/die_roll", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
 		    success: function (d) { 
 	    		cx = d.cx;
 		    	if( d.success == "true" ){
-		    		// Update Complete.
+		    		build_die_roller_output(d.o);
 		    	}
 		    }
 		});
-*/
+		$('#die_roller_d1').val('');$('#die_roller_d2').val('');
+
 	});
+	function build_die_roller_output(d){
+		let o = "";
+		dr = JSON.parse( d );
+		$.each(dr, function(i,v){
+
+			let vlist = "";
+			$.each(v[3], function(ii,vv){
+				vlist += '<div class="dr_indroll">' + vv + '</div>';
+			});
+
+			o += '<div class="dr_item">';
+				o += '<div class="dr_user">' + v[0] + ': </div>';
+				o += '<div class="dr_d1">' + v[1] + '</div>';
+				o += '<div class="dr_dd">D</div>';
+				o += '<div class="dr_d2">' + v[2] + '</div>';
+				o += '<div class="dr_dtotal">' + v[4] + '</div>';
+				o += '<div class="dr_dlist">' + vlist + '</div>';
+			o += '</div>';
+		});
+		$('#die_roller_rolled').html(o);
+	}
 
 
 
