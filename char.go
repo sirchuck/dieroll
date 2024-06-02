@@ -121,20 +121,21 @@ func die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs)
 	f           := ""
 	if( u.Status >= 10 ){
 		f 			 = fileToString( filename )
-		f 			 = "[" + `\"` + u.Username + `\"` + "," + strconv.Itoa(n1) + "," + strconv.Itoa(n2) + "," + rolls + "," + strconv.Itoa(r1) + "]," + f
-		fa 			:= strings.Split(f, ",")
+		f 			 = "[" + `\"` + u.Username + `\"` + "," + strconv.Itoa(n1) + "," + strconv.Itoa(n2) + "," + rolls + "," + strconv.Itoa(r1) + "],\n" + f
+		fa 			:= strings.Split(f, "\n")
 		fd          := ""
 		icount 		:= 0
 		for _, ch := range fa {
 			icount++
 			if(icount <= 50 && ch != ""){
-				fd += ch + ","
+				fd += ch + "\n"
 			}
 		}
 		iWriteFileByte( filename, []byte( fd )  )
 		if(f != ""){
 			f 			= f[:len(f)-1] 
 		}
+		f = strings.Replace(f, "\n", "", -1)
 	}
 	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"[" + f + "]\", \"success\":\"true\"}")
 }
@@ -145,6 +146,7 @@ func pull_die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *H
 		f 			 = fileToString( filename )
 		if(f != ""){
 			f 			= f[:len(f)-1] 
+			f = strings.Replace(f, "\n", "", -1)
 		}
 	}
 	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"[" + f + "]\", \"success\":\"true\"}")
