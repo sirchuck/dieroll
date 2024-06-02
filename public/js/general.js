@@ -1171,7 +1171,7 @@ $(document).ready(function () {
 		if( $('#die_roller_d2').val() < 1 ){ alert( 'Die sides must be greater than 0' ); return false; }
 
 		if( $('#die_roller_d1').val() > 100 ){ alert( '# Dice must be less than 100 dork' ); return false; }
-		if( $('#die_roller_d2').val() > 100000000 ){ alert( 'Die sides must be less than 100,000,000 dork' ); return false; }
+		if( $('#die_roller_d2').val() > 1000000 ){ alert( 'Die sides must be less than 1,000,000 dork' ); return false; }
 
 		s = {"vals":{"cx":cx, "n1":$('#die_roller_d1').val(), "n2":$('#die_roller_d2').val() }};
 		$.ajax({
