@@ -133,9 +133,9 @@ func die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs)
 		}
 		iWriteFileByte( filename, []byte( fd )  )
 		if(f != ""){
+			f = strings.Replace(f, "\n", "", -1)
 			f 			= f[:len(f)-1] 
 		}
-		f = strings.Replace(f, "\n", "", -1)
 	}
 	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"[" + f + "]\", \"success\":\"true\"}")
 }
@@ -145,8 +145,8 @@ func pull_die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *H
 	if( u.Status >= 10 ){
 		f 			 = fileToString( filename )
 		if(f != ""){
-			f 			= f[:len(f)-1] 
 			f = strings.Replace(f, "\n", "", -1)
+			f 			= f[:len(f)-1] 
 		}
 	}
 	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"[" + f + "]\", \"success\":\"true\"}")
