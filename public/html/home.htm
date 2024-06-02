@@ -17,6 +17,7 @@
 
 	<div id="page_dashboard">
 		<div id="leftcol">
+
 			<div id="pop_box_users" class="pop_box_div" >
 				<div class="pop_box_back"></div>
 				<div class="pop_box_front">
@@ -49,6 +50,14 @@
 					<input type="file" id="vote_img_file" name="vote_img_file" accept="image/*" value="" onchange="vote_image_uploaded_action(this);" style="visibility:hidden"/>
                		<p id="vote_img_status"></p>
 	            </form>
+			</div>
+
+
+			<div class="pop_box_div" style="display: inline-block; background-color:#E2E0CC; margin-top: -10px; padding: 10px; width: 241px;" id="die_roller_div">
+				<input style="display: inline-block; border-radius: 6px; width: 84px; font-size: 16px;" placeholder="# Dice" type="text"/>
+				<input style="display: inline-block; border-radius: 6px; width: 84px; font-size: 16px;" placeholder="Die Size" type="text"/>
+				<div style="display: inline-block; padding: 6px; border: 1px solid #333; border-radius: 6px; background-color:#f55d42; color:#fff; cursor:pointer; margin-left: 10px; font-size:16px;">Roll</div>
+				<div id="die_roller_rolled" style="overflow-y: scroll; margin-top: 10px; overflow-x: hidden; background-color:#fffed9; border: 1px solid #333; font- width: 240px; height:100px; font-size: 14px; text-align:left; padding: 6px;">Jet Rolled a 6 out of 10</div>
 			</div>
 
 

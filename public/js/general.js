@@ -1150,6 +1150,21 @@ $(document).ready(function () {
 
 	}
 
+	$(document).on('click', '.die_roller_link', function(){
+		$('#die_roller_div').show();
+/*
+		s = {"vals":{"cx":cx, "u":usr, "n1":n1, "n2":n2 ) }};
+		$.ajax({
+		  	type: "POST", url: "<ROOT_URL>/ajax/char_update", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
+		    success: function (d) { 
+	    		cx = d.cx;
+		    	if( d.success == "true" ){
+		    		// Update Complete.
+		    	}
+		    }
+		});
+*/
+	});
 
 
 
