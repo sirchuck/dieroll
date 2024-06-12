@@ -71,7 +71,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 #char_portrait>img { height:280px; width: 260px; border-radius: 16px; }
 #pop_box_champs  { display:none; height: 820px; }
 	.ch_action { cursor: pointer; }
-	#char_form_loader { display:none; position:absolute; top: 15px; left: 10px; margin: 10px; border: 1px solid #D84315; background-color:#fffde3; border-radius:10px; padding: 10px; z-index:10; }
+	#char_form_loader { display:none; position:absolute; top: 15px; left: 10px; margin: 10px; border: 1px solid #D84315; background-color:#ffbfe5; border-radius:10px; padding: 10px; z-index:10; }
 	#char_name      { width: 300px; min-height: 30px; }
 	#char_race      { display:inline-block; width: 220px; min-height: 30px; text-align: center; border-left: 1px solid #333; border-radius:4px; }
 	#char_aura      { display:inline-block; width: 220px; min-height: 30px; text-align: center; border-left: 1px solid #333; border-radius:4px; }
@@ -108,6 +108,9 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.char_class_item     { display: block; margin-bottom: 8px; border: 1px solid #333; background-color:#ebebeb; padding: 8px; font-size: 16px; }
 	.char_class_edit     { display:	inline-block; font-weight:bold; margin-right: 6px; }
 	.char_class_remove   { display: inline-block; margin-right: 10px; }
+
+	#del_platinum, #add_platinum, #del_gold, #add_gold, #del_silver, #add_silver, #del_copper, #add_copper { cursor: pointer; } 
+
 
 	.char_class_div_l  { display: inline-block; width: 180px; vertical-align: middle; }
 	.char_class_div_s  { display: inline-block; width: 44px; vertical-align: middle; }

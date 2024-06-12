@@ -407,6 +407,14 @@ $(document).ready(function () {
 						$('#char_armors').html(     (( d.sa.char_armors      == ''     ) ? ''    : nl2br(d.sa.char_armors)      ) );
 						$('#char_equipments').html( (( d.sa.char_equipments  == ''     ) ? ''    : nl2br(d.sa.char_equipments)  ) );
 
+
+						$('#char_treasures').html( (( !d.sa.char_treasures      ) ? ''    : nl2br(d.sa.char_treasures)  ) );
+						$('#char_bank1').html(     (( !d.sa.char_bank1      	) ? '0'   : d.sa.char_bank1   ) );
+						$('#char_bank2').html(     (( !d.sa.char_bank2        ) ? '0'   : d.sa.char_bank2   ) );
+						$('#char_bank3').html(     (( !d.sa.char_bank3        ) ? '0'   : d.sa.char_bank3   ) );
+						$('#char_bank4').html(     (( !d.sa.char_bank4        ) ? '0'   : d.sa.char_bank4   ) );
+
+
 						$('#char_toggle1').css('background-color', (( d.sa.char_toggle1  == '' ) ? '#afafaf'    : d.sa.char_toggle1 ) ).prop('title', (( d.sa.char_toggle1t    == '' ) ? 'You Decide'    : d.sa.char_toggle1t   ));
 						$('#char_toggle2').css('background-color', (( d.sa.char_toggle2  == '' ) ? '#afafaf'    : d.sa.char_toggle2 ) ).prop('title', (( d.sa.char_toggle2t    == '' ) ? 'You Decide'    : d.sa.char_toggle2t   ));
 						$('#char_toggle3').css('background-color', (( d.sa.char_toggle3  == '' ) ? '#afafaf'    : d.sa.char_toggle3 ) ).prop('title', (( d.sa.char_toggle3t    == '' ) ? 'You Decide'    : d.sa.char_toggle3t   ));
@@ -752,6 +760,30 @@ $(document).ready(function () {
 						o += '<div class="charfi"><input data-k="char_level_psp" class="charfid" type="text" value="' + $('#char_level_psp').text() + '" /></div>';
 	      	break;
 
+			case "char_banks":
+						o += '<div style="font-weight:bold; font-size: 26px; margin-bottom: 10px;">Add Coin to Your Bank</div>';
+						o += '<div>';
+						o += '<div style="display:inline-block;"><span id="del_platinum">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_platinum">[+]</span> </div>';
+						o += '<div class="charfl" style="display: inline-block; width: 100px;">Platinum:</div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank1" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank1').text() + '" /></div></div>';
+
+						o += '<div>';
+						o += '<div style="display:inline-block;"><span id="del_gold">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_gold">[+]</span> </div>';
+						o += '<div class="charfl" style="display: inline-block; width: 100px;" >Gold:</div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank2" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank2').text() + '" /></div></div>';
+
+						o += '<div>';
+						o += '<div style="display:inline-block;"><span id="del_silver">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_silver">[+]</span> </div>';
+						o += '<div class="charfl" style="display: inline-block; width: 100px;" >Silver:</div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank3" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank3').text() + '" /></div></div>';
+
+						o += '<div>';
+						o += '<div style="display:inline-block;"><span id="del_copper">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_copper">[+]</span> </div>';
+						o += '<div class="charfl" style="display: inline-block; width: 100px;" >Copper:</div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank4" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank4').text() + '" /></div></div>';
+	      	break;
+
+
 			case "char_toggle1":
 						o += '<div class="charfl">Toggle 1 Color:</div>';
 						o += '<div>';
@@ -998,8 +1030,13 @@ $(document).ready(function () {
 						o += '<div class="charfi"><textarea data-k="char_armors" class="charfid" type="text">' + br2nl($('#char_armors').html()) + '</textarea></div>';
 	      	break;
 			case "char_add_equiptment":
-						o += '<div class="charfl">Equipments:</div>';
-						o += '<div class="charfi"><textarea data-k="char_equipments" class="charfid" type="text">' + br2nl($('#char_equipments').html()) + '</textarea></div>';
+						if( $('#char_equipment_title').is(':visible') ){
+							o += '<div class="charfl">Equipments:</div>';
+							o += '<div class="charfi"><textarea data-k="char_equipments" class="charfid" type="text">' + br2nl($('#char_equipments').html()) + '</textarea></div>';
+						}else{
+							o += '<div class="charfl">Treasures:</div>';
+							o += '<div class="charfi"><textarea data-k="char_treasures" class="charfid" type="text">' + br2nl($('#char_treasures').html()) + '</textarea></div>';
+						}
 	      	break;
 
 			default:
@@ -1059,8 +1096,10 @@ $(document).ready(function () {
 				$('#' + $(v).data('k') ).css('background-color', $(v).val() );
 			}else if( $(v).attr('id') == 'char_togglet_' ){
 				$('#' + $(v).data('k').slice(0, -1) ).prop('title', $(v).val());
-
 			}else{
+				if( $(v).data('k') == 'char_name' ){  
+					$('.char_user_button').each(function(ii,vv){ if( $(vv).data('k') == $('#char_portrait').data('k') ){ $(vv).html($(v).val()); return false; } });
+				}
 				$('#' + $(v).data('k') ).html( nl2br($(v).val()) );
 			}
 		});
@@ -1207,6 +1246,14 @@ $(document).ready(function () {
 		});
 		$('#die_roller_rolled').html(o);
 	}
+
+	$('#char_purse_toggle').click(function(){
+		if( $('#char_equipment_title').is(':visible') ){
+			$('#char_equipment_title, #char_equipments').hide(); $('#char_treasures').show(); $('#char_banks').css('display', 'inline-block');
+		}else{
+			$('#char_treasures, #char_banks').hide(); $('#char_equipment_title, #char_equipments').show(); 
+		}
+	});
 
 
 

@@ -180,6 +180,11 @@ type Character struct {
 	Cweapons 	string	`json:"char_weapons"`		// Weapon List
 	Carmors 	string	`json:"char_armors"`		// Armor List
 	Cequipments string	`json:"char_equipments"`	// Equiptment List
+	Cbank1      string	`json:"char_bank1"`			// Character Platinum
+	Cbank2      string	`json:"char_bank2"`			// Character Gold
+	Cbank3      string	`json:"char_bank3"`			// Character Silver
+	Cbank4      string	`json:"char_bank4"`			// Character Copper
+	Ctreasures  string	`json:"char_treasures"`		// Character Treasure
 
 	Ctog1 		string	`json:"char_toggle1"`		// Toggle 1
 	Ctog2 		string	`json:"char_toggle2"`		// Toggle 2
