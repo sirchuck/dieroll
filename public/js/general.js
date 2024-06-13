@@ -763,24 +763,24 @@ $(document).ready(function () {
 			case "char_banks":
 						o += '<div style="font-weight:bold; font-size: 26px; margin-bottom: 10px;">Add Coin to Your Bank</div>';
 						o += '<div>';
-						o += '<div style="display:inline-block;"><span id="del_platinum">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_platinum">[+]</span> </div>';
+						o += '<div style="display:inline-block;"><span id="del_platinum">[-]</span> <input type="text" id="char_bank_plat_n" style="width: 90px;" value="0"/> <span id="add_platinum">[+]</span> </div>';
 						o += '<div class="charfl" style="display: inline-block; width: 100px;">Platinum:</div>';
-						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank1" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank1').text() + '" /></div></div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank1" id="char_bank_plat" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank1').text() + '" /></div></div>';
 
 						o += '<div>';
-						o += '<div style="display:inline-block;"><span id="del_gold">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_gold">[+]</span> </div>';
+						o += '<div style="display:inline-block;"><span id="del_gold">[-]</span> <input type="text" id="char_bank_gold_n" style="width: 90px;" value="0"/> <span id="add_gold">[+]</span> </div>';
 						o += '<div class="charfl" style="display: inline-block; width: 100px;" >Gold:</div>';
-						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank2" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank2').text() + '" /></div></div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank2" id="char_bank_gold" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank2').text() + '" /></div></div>';
 
 						o += '<div>';
-						o += '<div style="display:inline-block;"><span id="del_silver">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_silver">[+]</span> </div>';
+						o += '<div style="display:inline-block;"><span id="del_silver">[-]</span> <input type="text" id="char_bank_silver_n" style="width: 90px;" value="0"/> <span id="add_silver">[+]</span> </div>';
 						o += '<div class="charfl" style="display: inline-block; width: 100px;" >Silver:</div>';
-						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank3" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank3').text() + '" /></div></div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank3" id="char_bank_silver" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank3').text() + '" /></div></div>';
 
 						o += '<div>';
-						o += '<div style="display:inline-block;"><span id="del_copper">[-]</span> <input type="text" style="width: 90px;"/> <span id="add_copper">[+]</span> </div>';
+						o += '<div style="display:inline-block;"><span id="del_copper">[-]</span> <input type="text" id="char_bank_copper_n" style="width: 90px;" value="0"/> <span id="add_copper">[+]</span> </div>';
 						o += '<div class="charfl" style="display: inline-block; width: 100px;" >Copper:</div>';
-						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank4" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank4').text() + '" /></div></div>';
+						o += '<div class="charfi" style="display: inline-block;"><input data-k="char_bank4" id="char_bank_copper" class="charfid" style="width: 150px;" type="text" value="' + $('#char_bank4').text() + '" /></div></div>';
 	      	break;
 
 
@@ -1253,6 +1253,69 @@ $(document).ready(function () {
 		}else{
 			$('#char_treasures, #char_banks').hide(); $('#char_equipment_title, #char_equipments').show(); 
 		}
+	});
+	$('#char_form_loader').on('click', '#del_platinum, #del_gold, #del_silver, #del_copper, #add_platinum, #add_gold, #add_silver, #add_copper', function(){
+		switch( $(this).attr('id') ) {
+		  case "del_platinum":
+		  	$('#char_bank_plat').val( parseInt($('#char_bank_plat').val()) - parseInt($('#char_bank_plat_n').val()) );
+		    break;
+		  case "del_gold":
+		  	$('#char_bank_gold').val( parseInt($('#char_bank_gold').val()) - parseInt($('#char_bank_gold_n').val()) );
+		    break;
+		  case "del_silver":
+		  	$('#char_bank_silver').val( parseInt($('#char_bank_silver').val()) - parseInt($('#char_bank_silver_n').val()) );
+		    break;
+		  case "del_copper":
+		  	$('#char_bank_copper').val( parseInt($('#char_bank_copper').val()) - parseInt($('#char_bank_copper_n').val()) );
+		    break;
+		  case "add_platinum":
+		  	$('#char_bank_plat').val( parseInt($('#char_bank_plat').val()) + parseInt($('#char_bank_plat_n').val()) );
+		    break;
+		  case "add_gold":
+		  	$('#char_bank_gold').val( parseInt($('#char_bank_gold').val()) + parseInt($('#char_bank_gold_n').val()) );
+		    break;
+		  case "add_silver":
+		  	$('#char_bank_silver').val( parseInt($('#char_bank_silver').val()) + parseInt($('#char_bank_silver_n').val()) );
+		    break;
+		  case "add_copper":
+		  	$('#char_bank_copper').val( parseInt($('#char_bank_copper').val()) + parseInt($('#char_bank_copper_n').val()) );
+		    break;
+		  default:
+		}
+
+		if( parseInt($('#char_bank_copper').val()) < 0 ){
+			let dv = parseInt( Math.abs(parseInt($('#char_bank_copper').val())) / 10) + 1;
+			$('#char_bank_silver').val( parseInt($('#char_bank_silver').val()) - dv );
+			$('#char_bank_copper').val( (dv * 10) - Math.abs(parseInt($('#char_bank_copper').val())) );
+		}
+		if( parseInt($('#char_bank_silver').val()) < 0 ){
+			let dv = parseInt(Math.abs(parseInt($('#char_bank_silver').val()) / 10)) + 1;
+			$('#char_bank_gold').val( parseInt($('#char_bank_gold').val()) - dv );
+			$('#char_bank_silver').val( (dv * 10) - Math.abs(parseInt($('#char_bank_silver').val())) );
+		}
+		if( parseInt($('#char_bank_gold').val()) < 0 ){
+			let dv = parseInt(Math.abs(parseInt($('#char_bank_gold').val()) / 10)) + 1;
+			$('#char_bank_plat').val( parseInt($('#char_bank_plat').val()) - dv );
+			$('#char_bank_gold').val( (dv * 10) - Math.abs(parseInt($('#char_bank_gold').val())) );
+		}
+
+
+		if( parseInt($('#char_bank_copper').val()) > 9 ){
+			$('#char_bank_silver').val( parseInt($('#char_bank_silver').val())+parseInt(parseInt($('#char_bank_copper').val()) / 10) );
+			$('#char_bank_copper').val( parseInt($('#char_bank_copper').val()) % 10 );
+		}
+		if( parseInt($('#char_bank_silver').val()) > 9 ){
+			$('#char_bank_gold').val( parseInt($('#char_bank_gold').val())+parseInt(parseInt($('#char_bank_silver').val()) / 10) );
+			$('#char_bank_silver').val( parseInt($('#char_bank_silver').val()) % 10 );
+		}
+		if( parseInt($('#char_bank_gold').val())   > 9 ){
+			$('#char_bank_plat').val( parseInt($('#char_bank_plat').val())+parseInt(parseInt($('#char_bank_gold').val()) / 10) );
+			$('#char_bank_gold').val( parseInt($('#char_bank_gold').val()) % 10 );
+		}
+		$('#char_bank_copper_n,#char_bank_silver_n,#char_bank_gold_n,#char_bank_plat_n').val('0');
+
+
+
 	});
 
 
