@@ -56,6 +56,8 @@ func char_load(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs
 func char_update(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs){
 	// f  := alphNumStringNS( passvars.VALS["f"] )
 	f  := passvars.VALS["f"]
+	sp := passvars.VALS["sp"]
+
 	k  := alphNumStringNS( passvars.VALS["k"] )
 	un := strings.ToLower(alphNumStringNS( passvars.VALS["uu"] ))
 	if( (u.Status >= 1000 || passvars.VALS["uu"] == u.Username) && iExist( "private/characters/" + un + "/" + k + ".chr" ) ){
@@ -63,6 +65,7 @@ func char_update(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hre
 		userfile := fileToString( "private/characters/" + un + "/" + k + ".chr" )
 		json.Unmarshal([]byte(userfile) , &t)
 		json.Unmarshal([]byte( f ), &t)
+		t.Cspells = sp
 		b, _ := json.Marshal(t)
 		iWriteFileByte( "private/characters/" + un + "/" + k + ".chr", b )
 	}

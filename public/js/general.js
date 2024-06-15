@@ -6,6 +6,8 @@ var isLoggedIn = "<ISLOGGEDIN>";
 var	myname   = "";
 var	mystatus = 0;
 var working_user = [];
+var spells_array = [];
+var myspell      = [];
 
 if(sound_on){
 	var sound_button_click = new Audio('<ROOT_URL>/assets/sounds/sound_button_click.mp3');
@@ -402,7 +404,10 @@ $(document).ready(function () {
 						$('#char_notes').html(      (( d.sa.char_notes       == ''     ) ? ''    : nl2br(d.sa.char_notes)       ) );
 						$('#char_features').html(   (( d.sa.char_features    == ''     ) ? ''    : nl2br(d.sa.char_features)    ) );
 
-						$('#char_spells').html(     (( d.sa.char_spells      == ''     ) ? ''    : nl2br(d.sa.char_spells)      ) );
+						if( d.sa.char_spells != '' && Array.from(d.sa.char_spells)[0] == '['){
+							myspell = JSON.parse( d.sa.char_spells );
+							do_fill_spells();
+						}
 						$('#char_weapons').html(    (( d.sa.char_weapons     == ''     ) ? ''    : nl2br(d.sa.char_weapons)     ) );
 						$('#char_armors').html(     (( d.sa.char_armors      == ''     ) ? ''    : nl2br(d.sa.char_armors)      ) );
 						$('#char_equipments').html( (( d.sa.char_equipments  == ''     ) ? ''    : nl2br(d.sa.char_equipments)  ) );
@@ -999,8 +1004,57 @@ $(document).ready(function () {
 
 
 			case "char_add_spells":
-						o += '<div class="charfl">Spells &amp; Powers:</div>';
-						o += '<div class="charfi"><textarea data-k="char_spells" class="charfid" type="text">' + br2nl($('#char_spells').html()) + '</textarea></div>';
+						o += '<div class="charfl" style="text-align: center; margin: 6px;">Spells, Abilities &amp; Powers:</div>';
+						o += '<div style="width: 1000px; text-align: left; ">';
+							o += '<div style="display: inline-block; vertical-align: top; width: 200px; margin-right: 10px;">';
+								o += '<div style="height: 215px; margin-top: 27px; width: 180px; border: 1px solid #333; overflow-y: scroll; overflow-x: hidden; padding: 6px; background-color:#fff;">';
+
+									$.each(myspell, function(i,v){
+										o += '<div class="char_spell_name_list" data-k="' + i + '">';
+											o += '<div>' + v.name + '</div>';
+										o += '</div>';
+									});
+								o += '</div>';
+								o += '<div id="char_spell_remove_button" style="display: block; margin: 20px auto; width: 140px; background-color:#cb0b0b; border: 1px solid #333; color:#fff; font-size: 15px; text-align: center; padding: 4px; cursor: pointer;">Remove</div>';
+							o += '</div>';
+
+							o += '<div style="display: inline-block; width: 750px;" id="char_spells_box" data-k="0">';
+								o += '<div class="char_spell_div">Name: <input id="char_spells_name_t" data-k="char_spells_name" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Name"/></div>';
+								o += '<div class="char_spell_div">Level: ';
+									o += '<SELECT id="char_spells_level_t" data-k="char_spells_level" class="char_spell_input charfid charfisp" style="padding: 6px; font-size: 20px;"/>';
+										o += '<OPTION value="skill">Skills</OPTION>';
+										o += '<OPTION value="abilty">Ability</OPTION>';
+										o += '<OPTION value="power">Power</OPTION>';
+										o += '<OPTION value="0">0 - Cantrips </OPTION>';
+										o += '<OPTION value="1">1 - First level</OPTION>';
+										o += '<OPTION value="2">2 - Second level</OPTION>';
+										o += '<OPTION value="3">3 - Third level</OPTION>';
+										o += '<OPTION value="4">4 - Fourth level</OPTION>';
+										o += '<OPTION value="5">5 - Fifth level</OPTION>';
+										o += '<OPTION value="6">6 - Sixth level</OPTION>';
+										o += '<OPTION value="7">7 - Seventh level</OPTION>';
+										o += '<OPTION value="8">8 - Eighth level</OPTION>';
+										o += '<OPTION value="9">9 - Ninth level</OPTION>';
+									o += '</SELECT>';
+								o += '</div>';
+								o += '<div class="char_spell_div">Class: <input id="char_spells_class_t" data-k="char_spells_class" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Class" /></div>';
+								o += '<div class="char_spell_div" style="width: 180px;" ><div>Components:</div> ';
+									o += '<div style="background-color:#fff; height: 24px; border: 1px solid #767676; padding: 6px 5px; font-size: 18px; text-align: center;">';
+										o += '<div style="display: inline-block; width: 55px;" title="Verbal"><span>V: </span><input id="char_spells_comps_v_t" data-k="char_spells_comps_v" class="charfid charfisp"  type="checkbox"/></div>'
+										o += '<div style="display: inline-block; width: 55px;" title="Somatic"><span>S: </span><input id="char_spells_comps_s_t" data-k="char_spells_comps_s" class="charfid charfisp"  type="checkbox"/></div>'
+										o += '<div style="display: inline-block; width: 55px;" title="Material"><span>M: </span><input id="char_spells_comps_m_t" data-k="char_spells_comps_m" class="charfid charfisp"  type="checkbox"/></div>'
+									o += '</div>';
+								o += '</div>';
+								o += '<div class="char_spell_div">Casting Time: <input id="char_spells_casttime_t" data-k="char_spells_casttime" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Casting Time" /></div>';
+								o += '<div class="char_spell_div">Range: <input id="char_spells_range_t" data-k="char_spells_range" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Range" /></div>';
+								o += '<div class="char_spell_div">Duration: <input id="char_spells_duration_t" data-k="char_spells_duration" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Duration" /></div>';
+								o += '<div class="char_spell_div">Damage: <input id="char_spells_dmg_t" data-k="char_spells_dmg" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Damage" /></div>';
+								o += '<div class="char_spell_cb">Hit Required? <input id="char_spells_hit_t" data-k="char_spells_hit" class="charfid charfisp" type="checkbox" value="" placeholder="Requires Hit" /></div>';
+								o += '<div class="char_spell_cb">Save Allowed? <input id="char_spells_save_t" data-k="char_spells_save" class="charfid charfisp" type="checkbox" value="" placeholder="Requires Save" /></div>';
+								o += '<div class="char_spell_cb">Concentration required? <input id="char_spells_conc_t" data-k="char_spells_conc" class="charfid charfisp" type="checkbox" value="" placeholder="Requires Concentration" /></div>';
+								o += '<div class=""><textarea id="char_spells_desc_t" style="width: 737px; height: 150px;" data-k="char_spells_desc" class="charfid charfisp" type="text" placeholder="Description"></textarea></div>';
+							o += '</div>';
+						o += '</div>';
 	      	break;
 			case "char_add_bgnote":
 						if( $('#char_background').is(":visible") ){
@@ -1088,6 +1142,8 @@ $(document).ready(function () {
 	$('#pop_box_champs').on('click', '#char_cancel', function(){ $('#char_form_loader').hide(); });
 	$('#pop_box_champs').on('click', '#char_submit', function(){
 		char_set_fields = {};
+		has_my_spell = 0;
+		myspell2 = {"name":"", "level":"", "class":"", "comps":[0,0,0], "casttime":"", "range":"", "duration":"", "hit":"", "dmg":"", "save":"", "conc":"", "desc":""};
 
 		$('#char_submit').prop("disabled",true);
 		$('.charfid').each(function(i, v) {
@@ -1096,6 +1152,55 @@ $(document).ready(function () {
 				$('#' + $(v).data('k') ).css('background-color', $(v).val() );
 			}else if( $(v).attr('id') == 'char_togglet_' ){
 				$('#' + $(v).data('k').slice(0, -1) ).prop('title', $(v).val());
+
+
+			}else if( $(v).hasClass('charfisp') ){
+				has_my_spell = 1;
+				switch( $(v).data('k') ) {
+				  case "char_spells_name":
+				  	myspell2.name = $(v).val();
+				    break;
+				  case "char_spells_level":
+				  	myspell2.level = $(v).val();
+				    break;
+				  case "char_spells_class":
+				  	myspell2.class = $(v).val();
+				    break;
+				  case "char_spells_comps_v":
+				  	myspell2.comps[0] = ( $(v).is(':checked') ) ? '1' : '0'; // v
+				    break;
+				  case "char_spells_comps_s":
+				  	myspell2.comps[1] = ( $(v).is(':checked') ) ? '1' : '0'; // s
+				    break;
+				  case "char_spells_comps_m":
+				  	myspell2.comps[2] = ( $(v).is(':checked') ) ? '1' : '0'; // m
+				    break;
+				  case "char_spells_casttime":
+				  	myspell2.casttime = $(v).val();
+				    break;
+				  case "char_spells_range":
+				  	myspell2.range = $(v).val();
+				    break;
+				  case "char_spells_duration":
+				  	myspell2.duration = $(v).val();
+				    break;
+				  case "char_spells_dmg":
+				  	myspell2.dmg = $(v).val();
+				    break;
+				  case "char_spells_hit":
+				  	myspell2.hit = ( $(v).is(':checked') ) ? '1' : '0';
+				    break;
+				  case "char_spells_save":
+				  	myspell2.save = ( $(v).is(':checked') ) ? '1' : '0';
+				    break;
+				  case "char_spells_conc":
+				  	myspell2.conc = ( $(v).is(':checked') ) ? '1' : '0';
+				    break;
+				  case "char_spells_desc":
+				  	myspell2.desc = $(v).val();
+				    break;
+				  default:
+				}
 			}else{
 				if( $(v).data('k') == 'char_name' ){  
 					$('.char_user_button').each(function(ii,vv){ if( $(vv).data('k') == $('#char_portrait').data('k') ){ $(vv).html($(v).val()); return false; } });
@@ -1104,6 +1209,17 @@ $(document).ready(function () {
 			}
 		});
 
+		if( has_my_spell == 1 ){
+			if( $('.char_spell_name_list_sel').length > 0 ){
+				$('.char_spell_name_list_sel').each(function(i,v){
+					myspell[$(v).data('k')] = myspell2;
+					return true;
+				});
+			}else{
+				myspell.push( myspell2 ); 
+			}
+			do_fill_spells();
+		}
 		if( $('.charfid_classes').length > 0 ){
 			let use_class_key = 0;
 			if( $('#char_class_remove').length > 0 ){ use_class_key = $('#char_class_remove').data('k'); }
@@ -1164,7 +1280,7 @@ $(document).ready(function () {
 
 	function update_char_sheet(){
 		// console.log( char_set_fields );
-		s = {"vals":{"cx":cx, "k" : $('#char_portrait').data('k').toString(), "uu" : $('#user_using_user').data('k').toString(), "f": JSON.stringify(char_set_fields) }};
+		s = {"vals":{"cx":cx, "k" : $('#char_portrait').data('k').toString(), "uu" : $('#user_using_user').data('k').toString(), "f": JSON.stringify(char_set_fields), "sp":JSON.stringify(myspell) }};
 		$.ajax({
 		  	type: "POST", url: "<ROOT_URL>/ajax/char_update", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
 		    success: function (d) { 
@@ -1315,8 +1431,91 @@ $(document).ready(function () {
 		$('#char_bank_copper_n,#char_bank_silver_n,#char_bank_gold_n,#char_bank_plat_n').val('0');
 
 
-
 	});
+
+	$('#char_form_loader').on('click', '.char_spell_name_list', function(){
+		let mkey = $(this).data('k');
+		$('.char_spell_name_list_sel').removeClass('char_spell_name_list_sel');
+		$(this).addClass('char_spell_name_list_sel');
+		$('#char_spells_name_t').val( myspell[mkey].name );
+		$('#char_spells_level_t').val( myspell[mkey].level );
+		$('#char_spells_class_t').val( myspell[mkey].class );
+		$('#char_spells_comps_v_t').prop('checked', Boolean(Number(myspell[mkey].comps[0])) );
+		$('#char_spells_comps_s_t').prop('checked', Boolean(Number(myspell[mkey].comps[1])) );
+		$('#char_spells_comps_m_t').prop('checked', Boolean(Number(myspell[mkey].comps[2])) );
+		$('#char_spells_casttime_t').val( myspell[mkey].casttime );
+		$('#char_spells_range_t').val( myspell[mkey].range );
+		$('#char_spells_duration_t').val( myspell[mkey].duration );
+		$('#char_spells_dmg_t').val( myspell[mkey].dmg );
+		$('#char_spells_hit_t').prop('checked', Boolean(Number(myspell[mkey].hit))  );
+		$('#char_spells_save_t').prop('checked', Boolean(Number(myspell[mkey].save)) );
+		$('#char_spells_conc_t').prop('checked', Boolean(Number(myspell[mkey].conc)) );
+		$('#char_spells_desc_t').val( myspell[mkey].desc );
+	});
+	$('#char_form_loader').on('click', '#char_spell_remove_button', function(){
+		if( $('.char_spell_name_list_sel').length > 0 ){
+			$('.char_spell_name_list_sel').each(function(i,v){
+				myspell.splice($(v).data('k'), 1);
+				$(v).remove();
+			});
+			update_char_sheet();
+			// do_clear_spell_list();
+			$('#char_form_loader').hide();
+		}
+	});
+	function do_clear_spell_list(){
+		$('#char_spells_name_t').val('');
+		$('#char_spells_level_t').val('0');
+		$('#char_spells_class_t').val('');
+		$('#char_spells_comps_v_t').prop('checked', false);
+		$('#char_spells_comps_s_t').prop('checked', false);
+		$('#char_spells_comps_m_t').prop('checked', false);
+		$('#char_spells_casttime_t').val('');
+		$('#char_spells_range_t').val('');
+		$('#char_spells_duration_t').val('');
+		$('#char_spells_dmg_t').val('');
+		$('#char_spells_hit_t').val('');
+		$('#char_spells_save_t').prop('checked', false);
+		$('#char_spells_conc_t').prop('checked', false);
+		$('#char_spells_desc_t').prop('checked', false);
+	}
+	function do_fill_spells(){
+		let o = '';
+		$.each(myspell, function(i,v){
+			o += '<div class="spell_sheet_item" data-k="'+v.level+'">';
+				o += '<div class="spell_sheet_level">' + v.level + '</div>';
+				o += '<div class="spell_sheet_name">' + v.name + '</div>';
+
+				o += '<div class="spell_sheet_div1">';
+					o += '<div class="spell_sheet_class">' + v.class + '</div>';
+					if( v.comps[0] == '1' ){ o += '<div class="spell_sheet_comps1" title="Verbal">V</div>'; }
+					if( v.comps[1] == '1' ){ o += '<div class="spell_sheet_comps2" title="Somatic">S</div>'; }
+					if( v.comps[2] == '1' ){ o += '<div class="spell_sheet_comps3" title="Material">M</div>'; }
+				o += '</div>';	
+
+				o += '<div class="spell_sheet_div3">';
+					o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
+					o += '<div class="spell_sheet_div4">';
+						o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
+						o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+					o += '</div>';
+				o += '</div>';
+
+				o += '<div class="spell_sheet_div2">';
+					o += '<div class="spell_sheet_dmg">DMG: <span title="' + v.dmg + '">' + v.dmg + '</span></div>';
+					if( v.hit  == '1' ){ o += '<div class="spell_sheet_hit" title="Hit Required">Hit: &#x2714;</div>'; }
+					if( v.save == '1' ){ o += '<div class="spell_sheet_save" title="Save Allowed">Save: &#x2714;</div>'; }
+					if( v.conc == '1' ){ o += '<div class="spell_sheet_conc" title="Concentration Required">Conc: &#x2714;</div>'; }
+				o += '</div>';
+
+				o += '<div class="spell_sheet_desc">' + v.desc + '</div>';
+			o += '</div>';
+
+		});
+		$('#char_spells').html( o );
+	}
+
+
 
 
 

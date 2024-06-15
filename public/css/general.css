@@ -71,11 +71,13 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 #char_portrait>img { height:280px; width: 260px; border-radius: 16px; }
 #pop_box_champs  { display:none; height: 820px; }
 	.ch_action { cursor: pointer; }
-	#char_form_loader { display:none; position:absolute; top: 15px; left: 10px; margin: 10px; border: 1px solid #D84315; background-color:#ffbfe5; border-radius:10px; padding: 10px; z-index:10; }
+	#char_form_loader { display:none; position:absolute; top: 15px; left: 10px; margin: 10px; border: 1px solid #D84315; background-color:#ffde94; border-radius:10px; padding: 10px; z-index:10; }
 	#char_name      { width: 300px; min-height: 30px; }
 	#char_race      { display:inline-block; width: 220px; min-height: 30px; text-align: center; border-left: 1px solid #333; border-radius:4px; }
 	#char_aura      { display:inline-block; width: 220px; min-height: 30px; text-align: center; border-left: 1px solid #333; border-radius:4px; }
 	#char_alignment { display:inline-block; width: 220px; min-height: 30px; text-align: center; border-left: 1px solid #333; border-radius:4px; }
+
+
 
 
 	.charfl { text-align: left; padding: 5px 10px; font-weight:bold; }
@@ -121,7 +123,8 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 
 
 
-	.spell_bubble {display: inline-block; height: 30px; width: 30px; line-height:30px; border-radius:50%; text-align:center; font-weight: bold; border:1px solid #333;}
+	.spell_bubble {display: inline-block; height: 30px; width: 30px; line-height:30px; border-radius:50%; text-align:center; font-weight: bold; border:1px solid #333; cursor: pointer;}
+	.spell_bubble:hover {background-color: #fff;}
 	.power_boxes       {display: block; border: 1px solid #333; width: 50px; padding: 5px 0px; margin:0px; font-size:9px; text-align: center; cursor: pointer;}
 	.point_bubble       { display: inline-block; height: 100px; width: 122px; line-height:100px; border-radius:20% 20% 50% 50%; text-align:center; font-weight: bold; border:1px solid #333; }
 	.point_bubble_small { display: inline-block; height: 50px; width: 50px; line-height:50px; border-radius:50%; text-align:center; font-weight: bold; border:1px solid #333; }
@@ -129,6 +132,38 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.point_bubble_smallc { display: inline-block; height: 15px; width: 15px; border-radius:50%; border:1px solid #333; }
 	.point_bubble_small2{ display: inline-block; height: 30px; width: 80px; line-height:30px; border-radius:20px 0px 0px 20px; text-align:center; font-weight: bold; border:1px solid #333; }
 	.point_bubble_small3{ display: inline-block; height: 50px; width: 60px; line-height:50px; border-radius:50%; text-align:center; font-weight: bold; font-size: 15px; border:1px solid #333; }
+
+	.char_spell_input { width: 180px; }
+	.char_spell_cb    { display: inline-block; width: 250px; }
+	.char_spell_div   { display: inline-block; width: 185px; }
+	.char_spell_name_list {border: 1px solid #333; padding: 5px; background-color:#FFF; cursor: pointer; margin: 5px 0px;}
+	.char_spell_name_list:hover{ background-color:#f5ff63; }
+	.char_spell_name_list_sel{ background-color:#c7ffc6; }
+
+	.spell_sheet_item { margin: 5px; padding: 10px; border-radius: 8px; border: 1px solid #333; background-color:#fff; font-size:14px; }
+	.spell_sheet_name     { font-weight:bold; color:#333; text-decoration:underline; font-size: 22px; }
+	.spell_sheet_level    { font-weight:bold; float:right; background-color:#fff; border: 1px solid #333; text-align:center; height: 30px; width: 30px; line-height:30px; border-radius:50%; }
+	.spell_sheet_div1     {  }
+		.spell_sheet_class    { display: inline-block; font-style:italic; color:#333; width: 220px;}
+		.spell_sheet_comps1   { display: inline-block; line-height: 20px; width: 20px; height: 20px; background-color:#ffffe1; border: 1px solid #333; font-weight: bold; border-radius: 30%; margin-left: 4px; text-align:center; }
+		.spell_sheet_comps2   { display: inline-block; line-height: 20px; width: 20px; height: 20px; background-color:#ffffe1; border: 1px solid #333; font-weight: bold; border-radius: 30%; margin-left: 4px; text-align:center; }
+		.spell_sheet_comps3   { display: inline-block; line-height: 20px; width: 20px; height: 20px; background-color:#ffffe1; border: 1px solid #333; font-weight: bold; border-radius: 30%; margin-left: 4px; text-align:center; }
+	.spell_sheet_div3	  { margin: 5px 0px; }
+	.spell_sheet_div4	  { margin: 5px 0px; }
+		.spell_sheet_range    { display: inline-block; }
+		.spell_sheet_casttime { display: inline-block; width: 180px; }
+		.spell_sheet_casttime>span { color:#ff03c9; }
+		.spell_sheet_duration { display: inline-block; width: 180px; }
+		.spell_sheet_duration>span { color:#ff03c9; }
+	.spell_sheet_div2	  { margin: 10px 0px; }
+		.spell_sheet_dmg      { display: inline-block; width: 170px; overflow: hidden; }
+		.spell_sheet_dmg>span { font-weight:bold; color:#df0e0e; font-size: 18px; }
+		.spell_sheet_hit      { display: inline-block; float: right; line-height: 20px; width: 60px; height: 20px; background-color:#fcffe1; border: 1px solid #333; font-weight: bold; border-radius: 10px; margin-left: 4px; text-align:center; }
+		.spell_sheet_save     { display: inline-block; float: right; line-height: 20px; width: 60px; height: 20px; background-color:#d8e2f5; border: 1px solid #333; font-weight: bold; border-radius: 10px; margin-left: 4px; text-align:center; }
+		.spell_sheet_conc     { display: inline-block; float: right; line-height: 20px; width: 60px; height: 20px; background-color:#e0ffe4; border: 1px solid #333; font-weight: bold; border-radius: 10px; margin-left: 4px; text-align:center; }
+	.spell_sheet_desc     { display:block; border: 1px solid #333; border-radius: 6px; margin: 5px; padding: 10px; }
+
+
 
 
 #pop_box_items  { width: 200px; }
