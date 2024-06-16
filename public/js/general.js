@@ -1509,10 +1509,14 @@ $(document).ready(function () {
 				o += '</div>';	
 
 				o += '<div class="spell_sheet_div3">';
-					o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
+					if( v.range != '' ){
+						o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
+					}
 					o += '<div class="spell_sheet_div4">';
-						o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
-						o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+						if( v.casttime != '' || v.duration != '' ){
+							o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
+							o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+						}
 					o += '</div>';
 				o += '</div>';
 
