@@ -187,11 +187,14 @@ $(document).ready(function () {
 					o += '<OPTION VALUE="m1">Message</OPTION>';
 					o += '<OPTION VALUE="m2">Note</OPTION>';
 				o += '</optgroup>';
+			}
+			if(mystatus >= 1000 || working_user[0] == myname ){
 				o += '<optgroup label="Characters">';
 					o += '<OPTION VALUE="c1">Characters</OPTION>';
 				o += '</optgroup>';
 			}
 			if( mystatus >= 1000 ){
+
 				o += '<option disabled="disabled"></option>';
 				o += '<optgroup label="User Reset">';
 					o += '<OPTION VALUE="a0">Reset User</OPTION>';
@@ -262,7 +265,12 @@ $(document).ready(function () {
    						let o = '<div>';
 				    	if( d.success == "true" ){
 				    		$.each(d.s, function(k,v){
-								o += '<div><div class="char_submark" data-id="' + v[1] + '" data-k="' + v[0] + '" data-n="' + v[2] + '" title="Remove Character">[-]</div><div data-k="' + v[0] + '" class="char_user_button red_border_hl">' + v[2] + '</div></div>';
+				    			o += '<div>';
+				    				if( v[1].split('_')[0] == myname ){
+											o += '<div class="char_submark" data-id="' + v[1] + '" data-k="' + v[0] + '" data-n="' + v[2] + '" title="Remove Character">[-]</div>';
+				    				}
+										o += '<div data-k="' + v[0] + '" class="char_user_button red_border_hl">' + v[2] + '</div>';
+									o += '</div>';
 				    		});
 				    	}
 						o += '</div>';
@@ -376,8 +384,8 @@ $(document).ready(function () {
 						$('#char_level_dmp').html( (( d.sa.char_level_dmp    == ''     ) ? 'DMP'    : d.sa.char_level_dmp    ) );
 						$('#char_level_psp').html( (( d.sa.char_level_psp    == ''     ) ? 'PSP'    : d.sa.char_level_psp    ) );
 
+						out = '';
 						if( d.sa.char_classes != '' ){
-							out = '';
 							$.each(JSON.parse(d.sa.char_classes), function(k,v){
 								out += '<div data-k="'+(k+1)+'" class="char_class_item">';
 								out +='<div data-k="'+(k+1)+'" style="cursor:pointer;" class="ch_action_class char_class_edit" >(e)</div>';
@@ -404,6 +412,7 @@ $(document).ready(function () {
 						$('#char_notes').html(      (( d.sa.char_notes       == ''     ) ? ''    : nl2br(d.sa.char_notes)       ) );
 						$('#char_features').html(   (( d.sa.char_features    == ''     ) ? ''    : nl2br(d.sa.char_features)    ) );
 
+						$('#char_spells').html('');
 						if( d.sa.char_spells != '' && Array.from(d.sa.char_spells)[0] == '['){
 							myspell = JSON.parse( d.sa.char_spells );
 							do_fill_spells();
@@ -1022,9 +1031,9 @@ $(document).ready(function () {
 								o += '<div class="char_spell_div">Name: <input id="char_spells_name_t" data-k="char_spells_name" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Name"/></div>';
 								o += '<div class="char_spell_div">Level: ';
 									o += '<SELECT id="char_spells_level_t" data-k="char_spells_level" class="char_spell_input charfid charfisp" style="padding: 6px; font-size: 20px;"/>';
-										o += '<OPTION value="skill">Skills</OPTION>';
-										o += '<OPTION value="abilty">Ability</OPTION>';
-										o += '<OPTION value="power">Power</OPTION>';
+										o += '<OPTION value="Skill">Skills</OPTION>';
+										o += '<OPTION value="Abilty">Ability</OPTION>';
+										o += '<OPTION value="Power">Power</OPTION>';
 										o += '<OPTION value="0">0 - Cantrips </OPTION>';
 										o += '<OPTION value="1">1 - First level</OPTION>';
 										o += '<OPTION value="2">2 - Second level</OPTION>';
@@ -1048,7 +1057,7 @@ $(document).ready(function () {
 								o += '<div class="char_spell_div">Casting Time: <input id="char_spells_casttime_t" data-k="char_spells_casttime" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Casting Time" /></div>';
 								o += '<div class="char_spell_div">Range: <input id="char_spells_range_t" data-k="char_spells_range" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Range" /></div>';
 								o += '<div class="char_spell_div">Duration: <input id="char_spells_duration_t" data-k="char_spells_duration" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Duration" /></div>';
-								o += '<div class="char_spell_div">Damage: <input id="char_spells_dmg_t" data-k="char_spells_dmg" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Damage" /></div>';
+								o += '<div class="char_spell_div">Damage / Healing: <input id="char_spells_dmg_t" data-k="char_spells_dmg" class="char_spell_input charfid charfisp" type="text" value="" placeholder="Damage/Healing" /></div>';
 								o += '<div class="char_spell_cb">Hit Required? <input id="char_spells_hit_t" data-k="char_spells_hit" class="charfid charfisp" type="checkbox" value="" placeholder="Requires Hit" /></div>';
 								o += '<div class="char_spell_cb">Save Allowed? <input id="char_spells_save_t" data-k="char_spells_save" class="charfid charfisp" type="checkbox" value="" placeholder="Requires Save" /></div>';
 								o += '<div class="char_spell_cb">Concentration required? <input id="char_spells_conc_t" data-k="char_spells_conc" class="charfid charfisp" type="checkbox" value="" placeholder="Requires Concentration" /></div>';
@@ -1483,7 +1492,13 @@ $(document).ready(function () {
 		let o = '';
 		$.each(myspell, function(i,v){
 			o += '<div class="spell_sheet_item" data-k="'+v.level+'">';
-				o += '<div class="spell_sheet_level">' + v.level + '</div>';
+
+				if( v.level == 'Skill' || v.level == 'Abilty' || v.level == 'Power'  ){
+					o += '<div class="spell_sheet_level2">' + v.level + '</div>';
+				}else{
+					o += '<div class="spell_sheet_level">' + v.level + '</div>';
+				}
+
 				o += '<div class="spell_sheet_name">' + v.name + '</div>';
 
 				o += '<div class="spell_sheet_div1">';

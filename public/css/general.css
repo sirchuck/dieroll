@@ -143,6 +143,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.spell_sheet_item { margin: 5px; padding: 10px; border-radius: 8px; border: 1px solid #333; background-color:#fff; font-size:14px; }
 	.spell_sheet_name     { font-weight:bold; color:#333; text-decoration:underline; font-size: 22px; }
 	.spell_sheet_level    { font-weight:bold; float:right; background-color:#fff; border: 1px solid #333; text-align:center; height: 30px; width: 30px; line-height:30px; border-radius:50%; }
+	.spell_sheet_level2   { font-weight:bold; float:right; background-color:#fff; border: 1px solid #333; text-align:center; height: 30px; width: 50px; line-height:30px; border-radius:20px; }
 	.spell_sheet_div1     {  }
 		.spell_sheet_class    { display: inline-block; font-style:italic; color:#333; width: 220px;}
 		.spell_sheet_comps1   { display: inline-block; line-height: 20px; width: 20px; height: 20px; background-color:#ffffe1; border: 1px solid #333; font-weight: bold; border-radius: 30%; margin-left: 4px; text-align:center; }
