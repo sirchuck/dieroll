@@ -266,7 +266,10 @@ $(document).ready(function () {
 				    		$.each(d.s, function(k,v){
 				    			o += '<div>';
 				    				if( v[1].split('_')[0] == myname ){
-											o += '<div class="char_submark" data-id="' + v[1] + '" data-k="' + v[0] + '" data-n="' + v[2] + '" title="Remove Character">[-]</div>';
+				    					let ccolor = 'FFFFFF';
+				    					if( v[3] == '1' ){ ccolor = 'ff1d1d'; }
+											o += '<div class="char_npcmark" data-id="' + v[1] + '" data-k="' + v[0] + '" data-n="' + v[2] + '" data-np="'+((!v[3] || v[3]==0) ? '0' : '1' )+'" title="Character is NPC"><span style="background-color:#' +ccolor+ ';" class="point_bubble_smallnpc"></span></div>';
+											o += '<div class="char_submark" data-id="' + v[1] + '" data-k="' + v[0] + '" data-n="' + v[2] + '" data-np="'+((!v[3] || v[3]==0) ? '0' : '1' )+'" title="Remove Character">[-]</div>';
 				    				}
 										o += '<div data-k="' + v[0] + '" class="char_user_button red_border_hl">' + v[2] + '</div>';
 									o += '</div>';
@@ -487,6 +490,23 @@ $(document).ready(function () {
 	$('#pop_box_users').on('click', '#char_add_new', function(){
 		load_character_sheet( 0 );
 	});
+
+
+	$('#pop_box_users').on('click','.char_npcmark',function(){
+		char_set_fields = {};
+		let holdnpcd = ( $(this).data('np') == '0' ) ? '1' : '0';
+		$(this).data('np', holdnpcd);
+		char_set_fields[ 'char_npc' ] = holdnpcd;
+		let holdk = $('#char_portrait').data('k');
+		$('#char_portrait').data('k', $(this).data('k') );
+		update_char_sheet();
+		$('#char_portrait').data('k', holdk );
+		let ccolor = 'FFFFFF';
+		if( holdnpcd == '1' ){ ccolor = 'ff1d1d'; }
+		$('.point_bubble_smallnpc').css('background-color', '#' + ccolor);
+	});
+
+
 	$('#pop_box_users').on('click','.char_submark',function(){
 		if (confirm("Are you sure you wish to delete " + $(this).data('n') + "?") !== true) { return false; } 
 		s = {"vals":{"cx":cx, "k" : $(this).data('k').toString(), "uu" : $('#user_using_user').data('k').toString() }};

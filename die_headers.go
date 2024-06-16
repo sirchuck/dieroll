@@ -237,6 +237,7 @@ type Character struct {
 	Cop17t 		string	`json:"char_op17t"`		// Option 17 Title
 	Cop18t 		string	`json:"char_op18t"`		// Option 18 Title
 
+	Cisnpc 		string	`json:"char_npc"`		// Charicter is an NPC and hidden from others
 
 }
 

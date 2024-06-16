@@ -112,6 +112,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 
 	.char_addmark { position: absolute; right: 10px; font-size: 18px; top: 4px; cursor:pointer; }
 	.char_submark { display: inline-block; margin: 0px 5px 0px 0px; font-size: 18px; top: 4px; cursor:pointer; }
+	.char_npcmark { display: inline-block; margin: 0px 5px 0px 0px; vertical-align: middle; cursor:pointer; }
 	.char_user_button { display: inline-block; width: 180px; background-color: #E2E0CC; font-size: 16px; padding: 2px 4px; border: 1px solid #333; margin: 4px 0px; border-radius:4px; text-transform: uppercase; cursor: pointer; }
 	.togglepick { display: inline-block; margin: 10px; height: 30px; width: 30px; border: 1px solid #333; cursor: pointer; }
 	.togglepicked { border: 4px dashed #5a1b1b; }
@@ -142,6 +143,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.point_bubble_smallc { display: inline-block; height: 15px; width: 15px; border-radius:50%; border:1px solid #333; }
 	.point_bubble_small2{ display: inline-block; height: 30px; width: 80px; line-height:30px; border-radius:20px 0px 0px 20px; text-align:center; font-weight: bold; border:1px solid #333; }
 	.point_bubble_small3{ display: inline-block; height: 50px; width: 60px; line-height:50px; border-radius:50%; text-align:center; font-weight: bold; font-size: 15px; border:1px solid #333; }
+	.point_bubble_smallnpc { display: inline-block; height: 15px; width: 15px; border-radius:50%; border:1px solid #333; }
 
 	.char_spell_input { width: 180px; }
 	.char_spell_cb    { display: inline-block; width: 250px; }

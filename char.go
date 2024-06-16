@@ -57,7 +57,6 @@ func char_update(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hre
 	// f  := alphNumStringNS( passvars.VALS["f"] )
 	f  := passvars.VALS["f"]
 	sp := passvars.VALS["sp"]
-
 	k  := alphNumStringNS( passvars.VALS["k"] )
 	un := strings.ToLower(alphNumStringNS( passvars.VALS["uu"] ))
 	if( (u.Status >= 1000 || passvars.VALS["uu"] == u.Username) && iExist( "private/characters/" + un + "/" + k + ".chr" ) ){
@@ -89,8 +88,10 @@ func char_list(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs
 	   		t := Character{}
 			userfile := fileToString( "private/characters/" + un + "/" + e.Name() )
 			json.Unmarshal([]byte(userfile) , &t)
-			if( s != "[" ){ s += "," }
-			s += "[\"" + e.Name()[0:len(e.Name())-4] + "\", \"" + t.Cid + "\", \"" + t.Cname + "\" ]"
+			if( (un == u.Username && t.Cisnpc == "1") || t.Cisnpc != "1" ){
+				if( s != "[" ){ s += "," }
+				s += "[\"" + e.Name()[0:len(e.Name())-4] + "\", \"" + t.Cid + "\", \"" + t.Cname + "\", \"" + t.Cisnpc + "\" ]"
+			}
 		}
 	}
 	s += "]"
