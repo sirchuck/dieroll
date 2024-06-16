@@ -6,7 +6,6 @@ var isLoggedIn = "<ISLOGGEDIN>";
 var	myname   = "";
 var	mystatus = 0;
 var working_user = [];
-var spells_array = [];
 var myspell      = [];
 
 if(sound_on){
@@ -291,6 +290,7 @@ $(document).ready(function () {
 /***********************************************************************************************/
 	var char_set_fields = {};
 	function load_character_sheet(id){
+		char_set_fields = {};
 		s = {"vals":{"cx":cx, "k" : id.toString(), "uu" : $('#user_using_user').data('k').toString() }};
 		$.ajax({
 		  	type: "POST", url: "<ROOT_URL>/ajax/char_load", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
@@ -384,8 +384,9 @@ $(document).ready(function () {
 						$('#char_level_dmp').html( (( d.sa.char_level_dmp    == ''     ) ? 'DMP'    : d.sa.char_level_dmp    ) );
 						$('#char_level_psp').html( (( d.sa.char_level_psp    == ''     ) ? 'PSP'    : d.sa.char_level_psp    ) );
 
-						out = '';
+						$('#char_classes').html('');
 						if( d.sa.char_classes != '' ){
+							let out = '';
 							$.each(JSON.parse(d.sa.char_classes), function(k,v){
 								out += '<div data-k="'+(k+1)+'" class="char_class_item">';
 								out +='<div data-k="'+(k+1)+'" style="cursor:pointer;" class="ch_action_class char_class_edit" >(e)</div>';
@@ -413,6 +414,7 @@ $(document).ready(function () {
 						$('#char_features').html(   (( d.sa.char_features    == ''     ) ? ''    : nl2br(d.sa.char_features)    ) );
 
 						$('#char_spells').html('');
+						myspell = [];
 						if( d.sa.char_spells != '' && Array.from(d.sa.char_spells)[0] == '['){
 							myspell = JSON.parse( d.sa.char_spells );
 							do_fill_spells();
