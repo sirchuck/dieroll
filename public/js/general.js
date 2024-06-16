@@ -1578,7 +1578,7 @@ $(document).ready(function () {
 							if( v.conc == '1' ){ o += '<div class="spell_sheet_conc" title="Concentration Required">Conc: &#x2714;</div>'; }
 						o += '</div>';
 
-						o += '<div class="spell_sheet_desc">' + v.desc + '</div>';
+						o += '<div class="spell_sheet_desc">' + nl2br(v.desc) + '</div>';
 					o += '</div>';
 				}
 			}
