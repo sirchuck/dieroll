@@ -76,7 +76,7 @@ function vote_image_uploaded_action(ele){
 							    }
 							});
 
-	        		$('#char_portrait').html('<img src="'+user_img+'"/>'); 
+	        		$('#char_portrait_image').html('<img src="'+user_img+'"/>'); 
 	          		doErr('Image Uploaded.', 0, 1); 
 	          	} 
 	        }
@@ -322,7 +322,7 @@ $(document).ready(function () {
 						client.send();
 */
 //						$('#char_portrait').html( ((d.hasimg !== true) ? '<img src="'+root_url+'/assets/images/icons/noportrait.webp"/>' : '<img src="'+root_url+'/champs/'+char_user_name+'/'+d.sa.id+'.jpg" onerror="this.onerror=null;this.src=\''+root_url+'/assets/images/icons/noportrait.webp\';" />' ) );
-						$('#char_portrait').html( ((d.hasimg !== true) ? '<img src="'+root_url+'/assets/images/icons/noportrait.webp"/>' : '<img src="'+d.img+'" onerror="this.onerror=null;this.src=\''+root_url+'/assets/images/icons/noportrait.webp\';" />' ) );
+						$('#char_portrait_image').html( ((d.hasimg !== true) ? '<img src="'+root_url+'/assets/images/icons/noportrait.webp"/>' : '<img src="'+d.img+'" onerror="this.onerror=null;this.src=\''+root_url+'/assets/images/icons/noportrait.webp\';" />' ) );
 
 
 						$('#char_name').html( (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) );

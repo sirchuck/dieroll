@@ -52,8 +52,9 @@
 			</div>
 
 
-			<div id="char_portrait" data-k="0" data-u="" class="ch_action" onclick="$('#vote_img_file').click();">
-				<img src="<ROOT_URL>/assets/images/icons/noportrait.webp"/>
+			<div id="char_portrait" data-k="0" data-u="" class="ch_action">
+				<div id="char_portrait_image" onclick="$('#vote_img_file').click();"><img src="<ROOT_URL>/assets/images/icons/noportrait.webp"/></div>
+				<div id="char_video_hold">Video</div>
 			</div>
 			<div style="display: none;">
 				<form id="img_upload_form" method="POST">
@@ -94,13 +95,13 @@
 							<div id="char_alignment" class="ch_action">Alignment</div>
 						</div>
 					</div>
-					<div style="display: block; margin: -2px 20px; background-color:#fff0d4; border: 1px solid #333; border-top: none; border-radius: 0px 0px 4px 4px; padding: 0px 0px 4px 0px; text-align: left;">
-						<div id="char_age_tag"    class="char_attr ch_action">Age:    <div id="char_age">23</div></div>
-						<div id="char_height_tag" class="char_attr ch_action">Height: <div id="char_height">5ft 3in</div></div>
-						<div id="char_weight_tag" class="char_attr ch_action">Weight: <div id="char_weight">245 lbs</div></div>
-						<div id="char_skin_tag"   class="char_attr ch_action">Skin:   <div id="char_skin">Green</div></div>
-						<div id="char_eyes_tag"   class="char_attr ch_action">Eyes:   <div id="char_eyes">Blue</div></div>
-						<div id="char_hair_tag"   class="char_attr ch_action">Hair:   <div id="char_hair">Yellow</div></div>
+					<div style="display: block; margin: -2px 20px; background-color:#fff0d4; border: 1px solid #333; border-top: none; border-radius: 0px 0px 4px 4px; padding: 2px 0px 2px 0px; text-align: left;">
+						<div id="char_age_tag"    class="char_attr ch_action"><span>Age:</span>    <div id="char_age">23</div></div>
+						<div id="char_height_tag" class="char_attr ch_action"><span>Height:</span> <div id="char_height">5ft 3in</div></div>
+						<div id="char_weight_tag" class="char_attr ch_action"><span>Weight:</span> <div id="char_weight">245 lbs</div></div>
+						<div id="char_skin_tag"   class="char_attr ch_action"><span>Skin:</span>   <div id="char_skin">Green</div></div>
+						<div id="char_eyes_tag"   class="char_attr ch_action"><span>Eyes:</span>   <div id="char_eyes">Blue</div></div>
+						<div id="char_hair_tag"   class="char_attr ch_action"><span>Hair:</span>   <div id="char_hair">Yellow</div></div>
 					</div>
 
 					<div style="position: absolute; left: 190px; top: 130px; width: 535px; height: 105px; text-align: left;">
