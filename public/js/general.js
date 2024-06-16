@@ -1169,7 +1169,10 @@ $(document).ready(function () {
 				$('#' + $(v).data('k').slice(0, -1) ).prop('title', $(v).val());
 
 			}else if( $(v).data('k') == 'char_videos' ){
-				$('#char_video_button').data('k', $(v).val());
+				const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    		const match = $(v).val().match(regExp);
+				let ytv = (match && match[2].length === 11) ? match[2] : null;
+				$('#char_video_button').data('k', ytv);
 
 			}else if( $(v).hasClass('charfisp') ){
 				has_my_spell = 1;
@@ -1542,9 +1545,8 @@ $(document).ready(function () {
 		$('#char_spells').html( o );
 	}
 	$('#char_portrait').on('click', '#char_video_button', function(){
-		$('#video_display').html('<iframe id="video_display_iframe" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" frameborder="0"></iframe>');
-//		.attr('src', $('#char_video_button').data('k'));
-		$('#video_show').show();
+		$('#video_display').html('<iframe id="video_display_iframe" type="text/html" width="640" height="390" allow="autoplay" src="https://www.youtube.com/embed/'+$('#char_video_button').data('k')+'?enablejsapi=1&autoplay=1" frameborder="0"></iframe>');
+		$('#video_show').show(); 
 	});
 	$('#video_show').click(function(){
 		$('#video_display').html(''); $('#video_show').hide(); 
