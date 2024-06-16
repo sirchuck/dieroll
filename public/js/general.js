@@ -423,13 +423,13 @@ $(document).ready(function () {
 						$('#char_armors').html(     (( d.sa.char_armors      == ''     ) ? ''    : nl2br(d.sa.char_armors)      ) );
 						$('#char_equipments').html( (( d.sa.char_equipments  == ''     ) ? ''    : nl2br(d.sa.char_equipments)  ) );
 
-
 						$('#char_treasures').html( (( !d.sa.char_treasures      ) ? ''    : nl2br(d.sa.char_treasures)  ) );
 						$('#char_bank1').html(     (( !d.sa.char_bank1      	) ? '0'   : d.sa.char_bank1   ) );
 						$('#char_bank2').html(     (( !d.sa.char_bank2        ) ? '0'   : d.sa.char_bank2   ) );
 						$('#char_bank3').html(     (( !d.sa.char_bank3        ) ? '0'   : d.sa.char_bank3   ) );
 						$('#char_bank4').html(     (( !d.sa.char_bank4        ) ? '0'   : d.sa.char_bank4   ) );
 
+						$('#char_video_button').data('k', (( !d.sa.char_videos) ? ''   : d.sa.char_videos   ) );
 
 						$('#char_toggle1').css('background-color', (( d.sa.char_toggle1  == '' ) ? '#afafaf'    : d.sa.char_toggle1 ) ).prop('title', (( d.sa.char_toggle1t    == '' ) ? 'You Decide'    : d.sa.char_toggle1t   ));
 						$('#char_toggle2').css('background-color', (( d.sa.char_toggle2  == '' ) ? '#afafaf'    : d.sa.char_toggle2 ) ).prop('title', (( d.sa.char_toggle2t    == '' ) ? 'You Decide'    : d.sa.char_toggle2t   ));
@@ -506,10 +506,14 @@ $(document).ready(function () {
 		$('.togglepicked').removeClass('togglepicked');	$(this).addClass('togglepicked');	$('#char_toggle_').val( $(this).data('k') );
 	});
 
-	$("#pop_box_champs").on('click', '.ch_action', function(){
+	$("#pop_box_champs, #char_portrait").on('click', '.ch_action', function(){
 		let o = '';
 		$('#char_form_loader').show();
 		switch ( $(this).attr('id') ){
+			case "char_video_add_new":
+						o += '<div class="charfl">Add Video URL:</div>';
+						o += '<div class="charfi"><input data-k="char_videos" class="charfid" type="text" value="'+ $('#char_video_button').data('k') +'"/></div>';
+	      	break;
 			case "char_name":
 						o += '<div class="charfl">Character Name:</div>';
 						o += '<div class="charfi"><input data-k="char_name" class="charfid" type="text" value="' + $('#char_name').text() + '" maxlength="20" /></div>';
@@ -1164,6 +1168,8 @@ $(document).ready(function () {
 			}else if( $(v).attr('id') == 'char_togglet_' ){
 				$('#' + $(v).data('k').slice(0, -1) ).prop('title', $(v).val());
 
+			}else if( $(v).data('k') == 'char_videos' ){
+				$('#char_video_button').data('k', $(v).val());
 
 			}else if( $(v).hasClass('charfisp') ){
 				has_my_spell = 1;
@@ -1535,9 +1541,19 @@ $(document).ready(function () {
 		});
 		$('#char_spells').html( o );
 	}
-
+	$('#char_portrait').on('click', '#char_video_button', function(){
+		$('#video_display').html('<iframe id="video_display_iframe" type="text/html" width="640" height="390" src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" frameborder="0"></iframe>');
+//		.attr('src', $('#char_video_button').data('k'));
+		$('#video_show').show();
+	});
+	$('#video_show').click(function(){
+		$('#video_display').html(''); $('#video_show').hide(); 
+	});
 
 
 
 
 });
+
+
+

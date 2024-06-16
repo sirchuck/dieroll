@@ -185,6 +185,7 @@ type Character struct {
 	Cbank3      string	`json:"char_bank3"`			// Character Silver
 	Cbank4      string	`json:"char_bank4"`			// Character Copper
 	Ctreasures  string	`json:"char_treasures"`		// Character Treasure
+	Cvideos     string	`json:"char_videos"`  		// Character Video
 
 	Ctog1 		string	`json:"char_toggle1"`		// Toggle 1
 	Ctog2 		string	`json:"char_toggle2"`		// Toggle 2

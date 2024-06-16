@@ -16,6 +16,12 @@
 	</div>
 
 	<div id="page_dashboard">
+		<div id="video_show">
+			<div id="video_dark_back"></div>
+			<div id="video_front">
+				<div id="video_display"></div>
+			</div>
+		</div>
 		<div id="leftcol">
 
 			<div id="pop_box_users" class="pop_box_div" >
@@ -52,9 +58,9 @@
 			</div>
 
 
-			<div id="char_portrait" data-k="0" data-u="" class="ch_action">
+			<div id="char_portrait" data-k="0" data-u="" class="">
 				<div id="char_portrait_image" onclick="$('#vote_img_file').click();"><img src="<ROOT_URL>/assets/images/icons/noportrait.webp"/></div>
-				<div id="char_video_hold"><div id="char_video_button" style="display: inline-block;">Video</div>&nbsp;&nbsp;<div id="char_video_add_new" style="display: inline-block;">[+]</div></div>
+				<div id="char_video_hold"><div id="char_video_button" data-k="" style="display: inline-block;">Video</div>&nbsp;&nbsp;<div id="char_video_add_new" class="ch_action" style="display: inline-block;">[+]</div></div>
 			</div>
 			<div style="display: none;">
 				<form id="img_upload_form" method="POST">
