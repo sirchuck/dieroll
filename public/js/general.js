@@ -417,7 +417,7 @@ $(document).ready(function () {
 						myspell = [];
 						if( d.sa.char_spells != '' && Array.from(d.sa.char_spells)[0] == '['){
 							myspell = JSON.parse( d.sa.char_spells );
-							do_fill_spells();
+							do_fill_spells('A');
 						}
 						$('#char_weapons').html(    (( d.sa.char_weapons     == ''     ) ? ''    : nl2br(d.sa.char_weapons)     ) );
 						$('#char_armors').html(     (( d.sa.char_armors      == ''     ) ? ''    : nl2br(d.sa.char_armors)      ) );
@@ -1026,6 +1026,7 @@ $(document).ready(function () {
 
 									$.each(myspell, function(i,v){
 										o += '<div class="char_spell_name_list" data-k="' + i + '">';
+											o += '<div style="font-size: 13px;">' + v.class + ' <span style="float: right;">' + v.level + '</span></div>';
 											o += '<div>' + v.name + '</div>';
 										o += '</div>';
 									});
@@ -1038,7 +1039,7 @@ $(document).ready(function () {
 								o += '<div class="char_spell_div">Level: ';
 									o += '<SELECT id="char_spells_level_t" data-k="char_spells_level" class="char_spell_input charfid charfisp" style="padding: 6px; font-size: 20px;"/>';
 										o += '<OPTION value="Skill">Skills</OPTION>';
-										o += '<OPTION value="Abilty">Ability</OPTION>';
+										o += '<OPTION value="Ability">Ability</OPTION>';
 										o += '<OPTION value="Power">Power</OPTION>';
 										o += '<OPTION value="0">0 - Cantrips </OPTION>';
 										o += '<OPTION value="1">1 - First level</OPTION>';
@@ -1240,7 +1241,7 @@ $(document).ready(function () {
 			}else{
 				myspell.push( myspell2 ); 
 			}
-			do_fill_spells();
+			do_fill_spells('A');
 		}
 		if( $('.charfid_classes').length > 0 ){
 			let use_class_key = 0;
@@ -1501,51 +1502,70 @@ $(document).ready(function () {
 		$('#char_spells_conc_t').prop('checked', false);
 		$('#char_spells_desc_t').prop('checked', false);
 	}
-	function do_fill_spells(){
+
+
+	function do_fill_spells(ty){
 		let o = '';
-		$.each(myspell, function(i,v){
-			o += '<div class="spell_sheet_item" data-k="'+v.level+'">';
+		let color_array = ['fcffe1', 'e0ffe4', 'd8e2f5', 'e5e5e5', 'ffb03a' ];
+		let myspell3 = myspell.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+		myspell3     = myspell3.sort((a,b) => (a.level > b.level) ? 1 : ((b.level > a.level) ? -1 : 0));
+		myspell3     = myspell3.sort((a,b) => (a.class > b.class) ? 1 : ((b.class > a.class) ? -1 : 0));
+		let HoldClass = '';
+		let mcolor = -1;
+		$.each(myspell3, function(i,v){
+			if(HoldClass != v.class ){ HoldClass = v.class; mcolor++; if( mcolor > 4 ){ mcolor=0; } }
+			if( ty != 'A' && ty != 'Spell' && v.level != ty ){}else{
+				if( ty=='Spell' && (v.level == 'Skill' || v.level == 'Ability' || v.level == 'Power') ){}else{
+					o += '<div class="spell_sheet_item" data-k="'+v.level+'" >';
 
-				if( v.level == 'Skill' || v.level == 'Abilty' || v.level == 'Power'  ){
-					o += '<div class="spell_sheet_level2">' + v.level + '</div>';
-				}else{
-					o += '<div class="spell_sheet_level">' + v.level + '</div>';
-				}
-
-				o += '<div class="spell_sheet_name">' + v.name + '</div>';
-
-				o += '<div class="spell_sheet_div1">';
-					o += '<div class="spell_sheet_class">' + v.class + '</div>';
-					if( v.comps[0] == '1' ){ o += '<div class="spell_sheet_comps1" title="Verbal">V</div>'; }
-					if( v.comps[1] == '1' ){ o += '<div class="spell_sheet_comps2" title="Somatic">S</div>'; }
-					if( v.comps[2] == '1' ){ o += '<div class="spell_sheet_comps3" title="Material">M</div>'; }
-				o += '</div>';	
-
-				o += '<div class="spell_sheet_div3">';
-					if( v.range != '' ){
-						o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
-					}
-					o += '<div class="spell_sheet_div4">';
-						if( v.casttime != '' || v.duration != '' ){
-							o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
-							o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+						if( v.level == 'Skill' || v.level == 'Ability' || v.level == 'Power'  ){
+							o += '<div class="spell_sheet_level2" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
+						}else{
+							o += '<div class="spell_sheet_level" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
 						}
+
+						o += '<div class="spell_sheet_name">' + v.name + '</div>';
+
+						o += '<div class="spell_sheet_div1">';
+							o += '<div class="spell_sheet_class">' + v.class + '</div>';
+							if( v.comps[0] == '1' ){ o += '<div class="spell_sheet_comps1" title="Verbal">V</div>'; }
+							if( v.comps[1] == '1' ){ o += '<div class="spell_sheet_comps2" title="Somatic">S</div>'; }
+							if( v.comps[2] == '1' ){ o += '<div class="spell_sheet_comps3" title="Material">M</div>'; }
+						o += '</div>';	
+
+						o += '<div class="spell_sheet_div3">';
+							if( v.range != '' ){
+								o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
+							}
+							o += '<div class="spell_sheet_div4">';
+								if( v.casttime != '' || v.duration != '' ){
+									o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
+									o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+								}
+							o += '</div>';
+						o += '</div>';
+
+						o += '<div class="spell_sheet_div2">';
+							o += '<div class="spell_sheet_dmg">DMG: <span title="' + v.dmg + '">' + v.dmg + '</span></div>';
+							if( v.hit  == '1' ){ o += '<div class="spell_sheet_hit" title="Hit Required">Hit: &#x2714;</div>'; }
+							if( v.save == '1' ){ o += '<div class="spell_sheet_save" title="Save Allowed">Save: &#x2714;</div>'; }
+							if( v.conc == '1' ){ o += '<div class="spell_sheet_conc" title="Concentration Required">Conc: &#x2714;</div>'; }
+						o += '</div>';
+
+						o += '<div class="spell_sheet_desc">' + v.desc + '</div>';
 					o += '</div>';
-				o += '</div>';
-
-				o += '<div class="spell_sheet_div2">';
-					o += '<div class="spell_sheet_dmg">DMG: <span title="' + v.dmg + '">' + v.dmg + '</span></div>';
-					if( v.hit  == '1' ){ o += '<div class="spell_sheet_hit" title="Hit Required">Hit: &#x2714;</div>'; }
-					if( v.save == '1' ){ o += '<div class="spell_sheet_save" title="Save Allowed">Save: &#x2714;</div>'; }
-					if( v.conc == '1' ){ o += '<div class="spell_sheet_conc" title="Concentration Required">Conc: &#x2714;</div>'; }
-				o += '</div>';
-
-				o += '<div class="spell_sheet_desc">' + v.desc + '</div>';
-			o += '</div>';
+				}
+			}
 
 		});
 		$('#char_spells').html( o );
 	}
+	$('#pop_box_champs').on('click', '.spell_bubble_sort', function(){
+		do_fill_spells( $(this).data('k') );
+	});
+	$('#pop_box_champs').on('click', '.char_spell_skill_ops', function(){
+		do_fill_spells( $(this).data('k') );
+	});
 	$('#char_portrait').on('click', '#char_video_button', function(){
 		$('#video_display').html('<iframe id="video_display_iframe" type="text/html" width="640" height="390" allow="autoplay" src="https://www.youtube.com/embed/'+$('#char_video_button').data('k')+'?enablejsapi=1&autoplay=1" frameborder="0"></iframe>');
 		$('#video_show').show(); 

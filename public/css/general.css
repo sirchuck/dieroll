@@ -150,6 +150,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.char_spell_name_list:hover{ background-color:#f5ff63; }
 	.char_spell_name_list_sel{ background-color:#c7ffc6; }
 
+	.char_spell_skill_ops:hover { color:#fff; cursor:pointer; }
 	.spell_sheet_item { margin: 5px; padding: 10px; border-radius: 8px; border: 1px solid #333; background-color:#fff; font-size:14px; }
 	.spell_sheet_name     { font-weight:bold; color:#333; text-decoration:underline; font-size: 22px; }
 	.spell_sheet_level    { font-weight:bold; float:right; background-color:#fff; border: 1px solid #333; text-align:center; height: 30px; width: 30px; line-height:30px; border-radius:50%; }
