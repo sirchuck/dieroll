@@ -44,9 +44,9 @@ text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #E8A248, 0 0 3
 select.c-sel { padding: 4px 8px; font-size: 18px; }
 
 #leftcol  { display: block; float: left; position: relative; width: 295px; border: 1px solid transparent; height:850px; overflow:hidden; }
-#rightcol { display: block; position: relative; margin-left: 295px; border: 1px solid transparent; width:1100px; height:850px; overflow:hidden; }
+#rightcol { display: block; position: relative; margin-left: 295px; border: 1px solid transparent; width:1115px; height:850px; overflow:hidden; }
 
-#pop_box_users        { position: relative; height: 360px; width: 260px; }
+#pop_box_users        { position: relative; height: 360px; width: 280px; margin: 20px 11px;  }
 	.users_button     { display: block; background-color: #E2E0CC; font-size: 16px; padding: 2px 4px; border: 1px solid #333; margin: 4px 0px; border-radius:4px; text-transform: uppercase; cursor: pointer; }
 	.red_border_hl:hover { border-color: #D84315; background-color:#fffde3; }
 	.user_marked      { border-color: #D84315; background-color:#fffde3; }
@@ -59,7 +59,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	#go_home		  { display: none; position: absolute; bottom: 10px; right: 10px; margin-top: 10px; text-decoration: underline; cursor: pointer; font-size: 14px; font-weight: bold; color:#191fdb; }
 
 	#peeps_champs 	  { display: none; }
-	#champs_list      { margin: 8px 0px; height: 215px; overflow-x: none; overflow-y: auto; }
+	#champs_list      { margin: 8px 0px; height: 215px; overflow-x: hidden; overflow-y: auto; }
 
 
 
@@ -110,10 +110,10 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.char_attr>div  { display:inline-block; font-weight: bold; font-size: 16px;}
 	.char_attr>span { vertical-align: top;}
 
-	.char_addmark { position: absolute; right: 10px; font-size: 18px; top: 4px; cursor:pointer; }
-	.char_submark { display: inline-block; margin: 0px 5px 0px 0px; font-size: 18px; top: 4px; cursor:pointer; }
+	.char_addmark { position: absolute; right: 10px; font-size: 18px; top: 4px; cursor:pointer; vertical-align:middle; }
+	.char_submark { display: inline-block; margin: 0px 5px 0px 0px; font-size: 18px; top: 4px; cursor:pointer; vertical-align:middle; }
 	.char_npcmark { display: inline-block; margin: 0px 5px 0px 0px; vertical-align: middle; cursor:pointer; }
-	.char_user_button { display: inline-block; width: 180px; background-color: #E2E0CC; font-size: 16px; padding: 2px 4px; border: 1px solid #333; margin: 4px 0px; border-radius:4px; text-transform: uppercase; cursor: pointer; }
+	.char_user_button { display: inline-block; width: 180px; background-color: #E2E0CC; font-size: 16px; padding: 2px 4px; border: 1px solid #333; margin: 4px 0px; border-radius:4px; text-transform: uppercase; cursor: pointer; overflow: hidden; vertical-align: middle;}
 	.togglepick { display: inline-block; margin: 10px; height: 30px; width: 30px; border: 1px solid #333; cursor: pointer; }
 	.togglepicked { border: 4px dashed #5a1b1b; }
 	.bgnotes_selected { color:#fff; }

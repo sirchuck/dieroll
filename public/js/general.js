@@ -308,7 +308,13 @@ $(document).ready(function () {
 		    		let char_user_name = char_user_parts[0];
 		    		let char_id        = char_user_parts[1];
 		    		if(id==0){
-							$('#champs_list').prepend('<div><div class="char_submark" data-id="' + d.sa.id + '" data-k="' + char_id + '" data-n="' + (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) + '" title="Remove Character">[-]</div><div data-k="' + char_id  + '" class="char_user_button red_border_hl">' + (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) + '</div></div>');
+
+		    			let o = '<div>';
+			    			o += '<div class="char_npcmark" data-id="' + d.sa.id + '" data-k="' + char_id + '" data-n="' + (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) + '" data-np="0" title="Character is NPC"><span style="background-color:#FFFFFF;" class="point_bubble_smallnpc"></span></div>';
+			    			o += '<div class="char_submark" data-id="' + d.sa.id + '" data-k="' + char_id + '" data-n="' + (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) + '" data-np="0" title="Remove Character">[-]</div>';
+			    			o += '<div data-k="' + char_id  + '" class="char_user_button red_border_hl">' + (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) + '</div>';
+		    			o += '</div>';
+							$('#champs_list').prepend(o);
 		    		}
 						$('#char_portrait').data('u', char_user_name);
 						$('#char_portrait').data('k', char_id);
@@ -503,7 +509,7 @@ $(document).ready(function () {
 		$('#char_portrait').data('k', holdk );
 		let ccolor = 'FFFFFF';
 		if( holdnpcd == '1' ){ ccolor = 'ff1d1d'; }
-		$('.point_bubble_smallnpc').css('background-color', '#' + ccolor);
+		$(this).find('.point_bubble_smallnpc').css('background-color', '#' + ccolor);
 	});
 
 
