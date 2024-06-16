@@ -1174,6 +1174,7 @@ $(document).ready(function () {
 				let ytv = (match && match[2].length === 11) ? match[2] : null;
 				$(v).val( ytv );
 				$('#char_video_button').data('k', ytv);
+				char_set_fields[ 'char_videos' ] = ytv;
 
 			}else if( $(v).hasClass('charfisp') ){
 				has_my_spell = 1;
