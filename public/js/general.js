@@ -1172,6 +1172,7 @@ $(document).ready(function () {
 				const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     		const match = $(v).val().match(regExp);
 				let ytv = (match && match[2].length === 11) ? match[2] : null;
+				$(v).val( ytv );
 				$('#char_video_button').data('k', ytv);
 
 			}else if( $(v).hasClass('charfisp') ){
