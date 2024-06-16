@@ -96,7 +96,7 @@ select.c-sel { padding: 4px 8px; font-size: 18px; }
 	.chi_drawer_3 { width: 50px; height: 18px;}
 	.chi_label      { font-weight:bold; font-style: italic; font-size: 14px; }
 
-	.char_attr      { display:inline-block; border-left: 1px solid #333; width: 130px; margin: 0px 5px; font-size: 13px; text-align: center; }
+	.char_attr      { display:inline-block; border-left: 1px solid #333; width: 144px; margin: 0px 5px; font-size: 11px; text-align: left; overflow: hidden; padding-left: 6px; }
 	.char_attr:first-child { border-left: none; }
 	.char_attr>div  { display:inline-block; font-weight: bold; font-size: 16px;}
 
