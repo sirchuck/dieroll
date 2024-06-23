@@ -23,7 +23,7 @@ function doErr(s,t,en){
 function doTrans(i){ $('#bgvid').show().delay(i).fadeOut(); }
 function clean_user_popups(){
 	$('#peeps_travelers').show();
-	$('#user_using_div, #pop_box_champs, #pop_box_items, #pop_box_maps, #pop_box_quests, #peeps_champs, #char_portrait, #go_home').hide();
+	$('#user_using_div, #pop_box_champs, #pop_box_items, #pop_box_maps, #pop_box_quests, #peeps_champs, #peeps_camps, #char_portrait, #go_home').hide();
 }
 function rgb2hex(rgb) {
      if (  rgb.search("rgb") == -1 ) {
@@ -170,48 +170,61 @@ $(document).ready(function () {
 
 
 	$('#users_list').on('click', '.users_button', function(){
-		clean_user_popups();
-		if( $(this).hasClass('user_marked') ){
-			$('.user_marked').removeClass('user_marked');
-			$('#users_list_ops').hide();
-			$('#user_list_select').html('');
-		}else{
-			working_user = [$(this).data('k'), $(this).data('s')]; // User and User Status 
-			$('.user_marked').removeClass('user_marked');
-			$(this).addClass('user_marked');
-			$('#users_list_ops').show();
-			let o = '<OPTION VALUE="">Select Option</OPTION>';
-			if( mystatus >= 10 ){
-				o += '<optgroup label="Message">';
-					o += '<OPTION VALUE="m1">Message</OPTION>';
-					o += '<OPTION VALUE="m2">Note</OPTION>';
-				o += '</optgroup>';
-			}
-			if(mystatus >= 1000 || working_user[0] == myname ){
-				o += '<optgroup label="Characters">';
-					o += '<OPTION VALUE="c1">Characters</OPTION>';
-				o += '</optgroup>';
-			}
-			if( mystatus >= 1000 ){
 
-				o += '<option disabled="disabled"></option>';
-				o += '<optgroup label="User Reset">';
-					o += '<OPTION VALUE="a0">Reset User</OPTION>';
-				o += '</optgroup>';
-				o += '<optgroup label="Promotions">';
-					o += '<OPTION VALUE="a1">No Access</OPTION>';
-					o += '<OPTION VALUE="a2">Player Access</OPTION>';
-					o += '<OPTION VALUE="a3">Helper Access</OPTION>';
-					o += '<OPTION VALUE="a4">DM Access</OPTION>';
-				o += '</optgroup>';
-				o += '<optgroup label="Punishments">';
-					o += '<OPTION VALUE="d1">Delete User</OPTION>';
-					o += '<OPTION VALUE="d2">Bann User</OPTION>';
-				o += '</optgroup>';
+		if( $(this).data('d') == "-1" ){
+			get_campaign_list();
+
+		}else{
+			clean_user_popups();
+			if( $(this).hasClass('user_marked') ){
+				$('.user_marked').removeClass('user_marked');
+				$('#users_list_ops').hide();
+				$('#user_list_select').html('');
+			}else{
+				working_user = [$(this).data('k'), $(this).data('s')]; // User and User Status 
+				$('.user_marked').removeClass('user_marked');
+				$(this).addClass('user_marked');
+				$('#users_list_ops').show();
+				let o = '<OPTION VALUE="">Select Option</OPTION>';
+				if( mystatus >= 10 ){
+					o += '<optgroup label="Message">';
+						o += '<OPTION VALUE="m1">Message</OPTION>';
+						o += '<OPTION VALUE="m2">Note</OPTION>';
+					o += '</optgroup>';
+				}
+				if(mystatus >= 1000 || working_user[0] == myname ){
+					o += '<optgroup label="Characters">';
+						o += '<OPTION VALUE="c1">Characters</OPTION>';
+					o += '</optgroup>';
+				}
+				if( mystatus >= 1000 ){
+
+					o += '<option disabled="disabled"></option>';
+					o += '<optgroup label="User Reset">';
+						o += '<OPTION VALUE="a0">Reset User</OPTION>';
+					o += '</optgroup>';
+					o += '<optgroup label="Promotions">';
+						o += '<OPTION VALUE="a1">No Access</OPTION>';
+						o += '<OPTION VALUE="a2">Player Access</OPTION>';
+						o += '<OPTION VALUE="a3">Helper Access</OPTION>';
+						o += '<OPTION VALUE="a4">DM Access</OPTION>';
+					o += '</optgroup>';
+					o += '<optgroup label="Punishments">';
+						o += '<OPTION VALUE="d1">Delete User</OPTION>';
+						o += '<OPTION VALUE="d2">Bann User</OPTION>';
+					o += '</optgroup>';
+				}
+				$('#user_list_select').html(o);
 			}
-			$('#user_list_select').html(o);
 		}
 	});
+
+	function get_campaign_list(){
+		// 				if(mystatus >= 1000 || working_user[0] == myname ){
+		$('#peeps_travelers, #peeps_champs').hide(); $('#peeps_camps, #go_home').show();
+
+	}
+
 	$('#user_list_select').change(function(){
 
 		let sval = $(this).val(); 
@@ -277,7 +290,7 @@ $(document).ready(function () {
 				    	}
 						o += '</div>';
 						$('#champs_list').html(o);
-						$('#peeps_travelers').hide(); $('#peeps_champs').show();
+						$('#peeps_travelers, #peeps_camps').hide(); $('#peeps_champs').show();
 				    }
 				});
 			}
@@ -1550,41 +1563,47 @@ $(document).ready(function () {
 							o += '<div class="spell_sheet_level" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
 						}
 
-						o += '<div class="spell_sheet_name">' + v.name + '</div>';
+						o += '<div class="spell_sheet_name" style="cursor:pointer;">' + v.name + '</div>';
 
-						o += '<div class="spell_sheet_div1">';
-							o += '<div class="spell_sheet_class">' + v.class + '</div>';
-							if( v.comps[0] == '1' ){ o += '<div class="spell_sheet_comps1" title="Verbal">V</div>'; }
-							if( v.comps[1] == '1' ){ o += '<div class="spell_sheet_comps2" title="Somatic">S</div>'; }
-							if( v.comps[2] == '1' ){ o += '<div class="spell_sheet_comps3" title="Material">M</div>'; }
-						o += '</div>';	
+						o += '<div class="show_full_spell">';
 
-						o += '<div class="spell_sheet_div3">';
-							if( v.range != '' ){
-								o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
-							}
-							o += '<div class="spell_sheet_div4">';
-								if( v.casttime != '' || v.duration != '' ){
-									o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
-									o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+							o += '<div class="spell_sheet_div1">';
+								o += '<div class="spell_sheet_class">' + v.class + '</div>';
+								if( v.comps[0] == '1' ){ o += '<div class="spell_sheet_comps1" title="Verbal">V</div>'; }
+								if( v.comps[1] == '1' ){ o += '<div class="spell_sheet_comps2" title="Somatic">S</div>'; }
+								if( v.comps[2] == '1' ){ o += '<div class="spell_sheet_comps3" title="Material">M</div>'; }
+							o += '</div>';	
+
+							o += '<div class="spell_sheet_div3">';
+								if( v.range != '' ){
+									o += '<div class="spell_sheet_range">Range: ' + v.range + '</div>';
 								}
+								o += '<div class="spell_sheet_div4">';
+									if( v.casttime != '' || v.duration != '' ){
+										o += '<div class="spell_sheet_casttime"><span>CastTime:</span> ' + v.casttime + '</div>';
+										o += '<div class="spell_sheet_duration"><span>Duration:</span> ' + v.duration + '</div>';
+									}
+								o += '</div>';
 							o += '</div>';
+
+							o += '<div class="spell_sheet_div2">';
+								o += '<div class="spell_sheet_dmg">DMG: <span title="' + v.dmg + '">' + v.dmg + '</span></div>';
+								if( v.hit  == '1' ){ o += '<div class="spell_sheet_hit" title="Hit Required">Hit: &#x2714;</div>'; }
+								if( v.save == '1' ){ o += '<div class="spell_sheet_save" title="Save Allowed">Save: &#x2714;</div>'; }
+								if( v.conc == '1' ){ o += '<div class="spell_sheet_conc" title="Concentration Required">Conc: &#x2714;</div>'; }
+							o += '</div>';
+
+							o += '<div class="spell_sheet_desc">' + nl2br(v.desc) + '</div>';
 						o += '</div>';
 
-						o += '<div class="spell_sheet_div2">';
-							o += '<div class="spell_sheet_dmg">DMG: <span title="' + v.dmg + '">' + v.dmg + '</span></div>';
-							if( v.hit  == '1' ){ o += '<div class="spell_sheet_hit" title="Hit Required">Hit: &#x2714;</div>'; }
-							if( v.save == '1' ){ o += '<div class="spell_sheet_save" title="Save Allowed">Save: &#x2714;</div>'; }
-							if( v.conc == '1' ){ o += '<div class="spell_sheet_conc" title="Concentration Required">Conc: &#x2714;</div>'; }
-						o += '</div>';
-
-						o += '<div class="spell_sheet_desc">' + nl2br(v.desc) + '</div>';
 					o += '</div>';
 				}
 			}
 
 		});
 		$('#char_spells').html( o );
+		if( $('#char_spell_skill_ops_swap').css('color') == 'rgb(255, 255, 255)' ){ $('.show_full_spell').hide(); } else { $('.show_full_spell').show(); }
+
 	}
 	$('#pop_box_champs').on('click', '.spell_bubble_sort', function(){
 		do_fill_spells( $(this).data('k') );
@@ -1592,6 +1611,13 @@ $(document).ready(function () {
 	$('#pop_box_champs').on('click', '.char_spell_skill_ops', function(){
 		do_fill_spells( $(this).data('k') );
 	});
+	$('#pop_box_champs').on('click', '#char_spell_skill_ops_swap', function(){
+		if( $(this).css('color') == 'rgb(255, 255, 255)' ){ $('.show_full_spell').show(); $(this).css('color','#000000'); } else { $('.show_full_spell').hide(); $(this).css('color','#FFFFFF'); }
+	});
+	$('#pop_box_champs').on('click', '.spell_sheet_name', function(){
+		$(this).siblings('.show_full_spell').toggle();
+	});
+
 	$('#char_portrait').on('click', '#char_video_button', function(){
 		$('#video_display').html('<iframe id="video_display_iframe" type="text/html" width="640" height="390" allow="autoplay" src="https://www.youtube.com/embed/'+$('#char_video_button').data('k')+'?enablejsapi=1&autoplay=1" frameborder="0"></iframe>');
 		$('#video_show').show(); 

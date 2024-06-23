@@ -93,6 +93,14 @@ type Dierolls struct {
 	R1	 		string	`json:"r1"`		// Result 
 }
 
+type Camps struct {
+	Campid 		string	`json:"cid"`	// Campaign id - owner-id_campaing-name 
+	Campname    string  `json:"cname"`	// Campaign Name
+	Campowners  string  `json:"cowners"`// Campaign Owners array [id,id]
+	Campchars   string  `json:"ccars"`	// Character who rolled
+	Campmaps    string  `json:"cmaps"`	// Array of campaign map names [one.jpg, two.jpg] 
+}
+
 type Character struct {
 	Cid  		string	`json:"id"` 				// Character id UN_1 
 	Cname 		string	`json:"char_name"`			// Character Name
