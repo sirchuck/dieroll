@@ -157,3 +157,35 @@ func pull_die_roll(w http.ResponseWriter, r *http.Request, u *Users, passvars *H
 }
 
 
+func camp_new(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs){
+	k  := alphNumStringNS( passvars.VALS["k"] )
+	un := strings.ToLower(alphNumStringNS( passvars.VALS["u"] ))
+	if(u.Status >= 1000 || passvars.VALS["u"] == u.Username){
+		// iMakeDir( "private/camps/" + un )
+		// iMakeDir( "private/camps/" + un + "/" + un + "_" + k )
+		// filename := "private/camps/" + un + "/" + un + "_" + k + "/" +  k + ".cam"
+		filename := "private/camps/" +  un + "_" + k + ".cam"
+   		t := Camps{}
+   		t.Campid     = un + "_" + k
+   		t.Campname   = k
+   		t.Campowners = "[" + un + "]"
+   		t.Campchars  = "[]"
+   		t.Campmaps   = "[]"
+		b, _ := json.Marshal(t)
+		iWriteFileByte( filename, b )
+	}
+	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"o\":\"\", \"success\":\"true\"}")
+}
+func camp_list(w http.ResponseWriter, r *http.Request, u *Users, passvars *Hreqs){
+	s  := "["
+	entries, _ := os.ReadDir("private/camps" )
+	for _, e := range entries {
+		if( s != "[" ){ s += "," }
+		s += `"` + e.Name() + `"`
+	}
+	s += "]"
+	fmt.Fprintf(w, "%s", "{\"err\":\"\", \"cx\":\""+ u.Crosssite +"\", \"s\":" + s + ", \"success\":\"true\"}")
+}
+
+
+

@@ -23,7 +23,7 @@ function doErr(s,t,en){
 function doTrans(i){ $('#bgvid').show().delay(i).fadeOut(); }
 function clean_user_popups(){
 	$('#peeps_travelers').show();
-	$('#user_using_div, #pop_box_champs, #pop_box_items, #pop_box_maps, #pop_box_quests, #peeps_champs, #peeps_camps, #char_portrait, #go_home').hide();
+	$('#user_using_div, #pop_box_champs, #pop_box_camps, #pop_box_items, #pop_box_maps, #pop_box_quests, #peeps_champs, #peeps_camps, #char_portrait, #go_home').hide();
 }
 function rgb2hex(rgb) {
      if (  rgb.search("rgb") == -1 ) {
@@ -173,6 +173,7 @@ $(document).ready(function () {
 
 		if( $(this).data('d') == "-1" ){
 			get_campaign_list();
+			$('#pop_box_camps').show();
 
 		}else{
 			clean_user_popups();
@@ -220,9 +221,25 @@ $(document).ready(function () {
 	});
 
 	function get_campaign_list(){
-		// 				if(mystatus >= 1000 || working_user[0] == myname ){
 		$('#peeps_travelers, #peeps_champs').hide(); $('#peeps_camps, #go_home').show();
-
+		s = {"vals":{"cx":cx }};
+		$.ajax({
+		  	type: "POST", url: "<ROOT_URL>/ajax/camp_list", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
+		    success: function (d) { 
+	    		cx = d.cx;
+	    		o = '';
+		    	if( d.success == "true" ){
+		    		let ds = d.s;
+		    		if(ds == ''){ ds = []; }
+		    		$.each(ds,function(i,v){
+							o += '<div>';
+								o += '<span class="camp_remove">[-]</span> ' + v;
+							o += '</div>';
+		    		});
+		    	}
+			    $('#camp_name_list').html(o);
+		    }
+		});
 	}
 
 	$('#user_list_select').change(function(){
@@ -355,9 +372,9 @@ $(document).ready(function () {
 						$('#char_age').html(    (( d.sa.char_age    == '' ) ? '' : d.sa.char_age    ) ); // _tag for on click
 						$('#char_height').html( (( d.sa.char_height == '' ) ? '' : d.sa.char_height ) );
 						$('#char_weight').html( (( d.sa.char_weight == '' ) ? '' : d.sa.char_weight ) );
-						$('#char_skin').html(   (( d.sa.char_skin   == '' ) ? '' : d.sa.char_skin   ) );
-						$('#char_eyes').html(   (( d.sa.char_eyes   == '' ) ? '' : d.sa.char_eyes   ) );
-						$('#char_hair').html(   (( d.sa.char_hair   == '' ) ? '' : d.sa.char_hair   ) );
+						$('#char_skin').html(   (( d.sa.char_skin   == '' ) ? '' : d.sa.char_skin   ) ).prop('title', d.sa.char_skin);
+						$('#char_eyes').html(   (( d.sa.char_eyes   == '' ) ? '' : d.sa.char_eyes   ) ).prop('title', d.sa.char_eyes);
+						$('#char_hair').html(   (( d.sa.char_hair   == '' ) ? '' : d.sa.char_hair   ) ).prop('title', d.sa.char_hair);
 
 						$('#char_str_op1').html(   (( d.sa.char_str_op1     == ''     ) ? ''  : d.sa.char_str_op1   ) ).prop('title', (( d.sa.char_str_op1  == '' ) ? 'You Decide'    : d.sa.char_str_op1t  ) );
 						$('#char_str_op2').html(   (( d.sa.char_str_op2     == ''     ) ? ''  : d.sa.char_str_op2   ) ).prop('title', (( d.sa.char_str_op2  == '' ) ? 'You Decide'    : d.sa.char_str_op2t  ) );
@@ -1193,7 +1210,6 @@ $(document).ready(function () {
 
 
 
-
 	$('#pop_box_champs').on('click', '#char_cancel', function(){ $('#char_form_loader').hide(); });
 	$('#pop_box_champs').on('click', '#char_submit', function(){
 		char_set_fields = {};
@@ -1624,6 +1640,35 @@ $(document).ready(function () {
 	});
 	$('#video_show').click(function(){
 		$('#video_display').html(''); $('#video_show').hide(); 
+	});
+
+
+	$('#peeps_camps').on('click', '#camp_add_new', function(){
+		$('#camp_form_loader').show();
+		o = '<div style="margin: 10px;">New Campaign Name:</div>';
+		o += '<div>';
+			o += '<div><input type="text" id="camp_name_set" placeholder="Campaign Name"/></div>';
+		o += '</div>';
+		$('#camp_form_loader_set').html(o);
+	});
+	$('#pop_box_camps').on('click', '#camp_cancel', function(){ $('#camp_form_loader').hide(); });
+	$('#pop_box_camps').on('click', '#camp_submit', function(){
+
+		$('#camp_submit').prop("disabled",true);
+		$('#camp_form_loader').hide();
+		s = {"vals":{"cx":cx, "k" : $('#camp_name_set').val().toString(), "u" : myname }};
+		$.ajax({
+		  	type: "POST", url: "<ROOT_URL>/ajax/camp_new", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
+		    success: function (d) { 
+	    		cx = d.cx;
+		    	if( d.success == "true" ){
+		    		// Update Complete.
+						$('#camp_submit').prop("disabled",false);
+		    	}
+		    }
+		});
+
+
 	});
 
 

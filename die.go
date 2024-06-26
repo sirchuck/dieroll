@@ -96,6 +96,10 @@ func uriHandler(w http.ResponseWriter, r *http.Request) {
 				char_update(w,r,&u,&passvars)
 			}else if( uri.Method == "char_update_img" ){
 				char_update_img(w,r,&u,&passvars)
+			}else if( uri.Method == "camp_new" ){
+				camp_new(w,r,&u,&passvars)
+			}else if( uri.Method == "camp_list" ){
+				camp_list(w,r,&u,&passvars)
 			} else {
 				// Mabey do something?
 			}
