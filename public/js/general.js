@@ -1574,9 +1574,9 @@ $(document).ready(function () {
 					o += '<div class="spell_sheet_item" data-k="'+v.level+'" >';
 
 						if( v.level == 'Skill' || v.level == 'Ability' || v.level == 'Power'  ){
-							o += '<div class="spell_sheet_level2" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
+							o += '<div class="text_expandable spell_sheet_level2" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
 						}else{
-							o += '<div class="spell_sheet_level" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
+							o += '<div class="text_expandable spell_sheet_level" style="background-color:#' +color_array[mcolor]+ ';">' + v.level + '</div>';
 						}
 
 						o += '<div class="spell_sheet_name" style="cursor:pointer;">' + v.name + '</div>';
@@ -1667,11 +1667,14 @@ $(document).ready(function () {
 		    	}
 		    }
 		});
-
-
 	});
 
-
+	$('#pop_box_champs').on('click', '.text_expandable', function(){
+		$('#char_magnify2').html('');
+		$(this).parent().clone().appendTo( "#char_magnify2" );
+		$('#char_magnify').show(); 
+	});
+	$('#char_magnify').click(function(){ $('#char_magnify').hide(); });
 
 
 });
