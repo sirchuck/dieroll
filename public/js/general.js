@@ -13,10 +13,12 @@ if(sound_on){
 	$(document).on( 'click', '.sound_button_click', function(){ sound_button_click.play(); });
 }
 
+
+
 // Errors
 function doErr(s,t,en){
 	// Could do en 1 for error 2 for note color change, or set a redirect/reload
-	t = (t==0) ? 10000 : t ;
+	t = (t==0) ? 10000 : t ; 
 	$('#errNote').text(s).show().delay(t).fadeOut(0);
 }
 
@@ -110,6 +112,9 @@ $(document).ready(function () {
 		});
 	});
 
+	$("#game_pass").on("keydown", function (e) {
+		if (e.key === "Enter") { e.preventDefault(); $('#button_join_game_door').trigger('click'); }
+	});
 
 	$('#button_join_game_door').click(function(){
 		if( ($('#game_name').val()).trim().length < 2 ){ doErr('User Name must be at least 3 characters long.', 0, 1); return true; }
