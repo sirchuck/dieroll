@@ -321,7 +321,23 @@ $(document).ready(function () {
 /***********************************************************************************************/
 /************* C H A R A C T E R S ************/ 
 /***********************************************************************************************/
+	function downloadJSON() {
+		if( char_temporary.id.trim() == '' ){ alert('Could not access the character, try again.'); return false; }
+		let char_file_name = char_temporary.id + '.json';
+		let jsonStr = JSON.stringify(char_temporary, null, 2);
+		const blob = new Blob([jsonStr], { type: "application/json" });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = char_file_name;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	}
+
 	var char_set_fields = {};
+	var	char_temporary = '';
 	function load_character_sheet(id){
 		char_set_fields = {};
 		s = {"vals":{"cx":cx, "k" : id.toString(), "uu" : $('#user_using_user').data('k').toString() }};
@@ -329,6 +345,7 @@ $(document).ready(function () {
 		  	type: "POST", url: "<ROOT_URL>/ajax/char_load", data: JSON.stringify(s), contentType: "application/json", dataType: 'json',
 		    success: function (d) { 
 	    		cx = d.cx;
+	    		char_temporary = '';
 
 					$('#char_portrait').data('u', '');
 					$('#char_portrait').data('k', '0');
@@ -345,6 +362,8 @@ $(document).ready(function () {
 			    			o += '<div data-k="' + char_id  + '" class="char_user_button red_border_hl">' + (( d.sa.char_name == '' || d.sa.char_name == 'Character Name' ) ? 'Character Name' : d.sa.char_name ) + '</div>';
 		    			o += '</div>';
 							$('#champs_list').prepend(o);
+		    		} else {
+		    			char_temporary = d.sa;
 		    		}
 						$('#char_portrait').data('u', char_user_name);
 						$('#char_portrait').data('k', char_id);
@@ -1632,6 +1651,10 @@ $(document).ready(function () {
 	});
 	$('#pop_box_champs').on('click', '.spell_sheet_name', function(){
 		$(this).siblings('.show_full_spell').toggle();
+	});
+
+	$('#char_portrait').on('click', '#char_download_hold', function(){
+		downloadJSON();
 	});
 
 	$('#char_portrait').on('click', '#char_video_button', function(){
